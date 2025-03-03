@@ -15,7 +15,7 @@ i18n
     .use(initReactI18next)
     .init({
         resources,
-        lng: 'zh',
+        lng: 'en',
         defaultNS: 'home', // 设置默认命名空间
         ns: ['home'], // 设置命名空间列表
         interpolation: {

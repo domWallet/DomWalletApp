@@ -1,3 +1,8 @@
 {
-  "welcome": "welcome"
+  "welcome": "welcome",
+  "clickToLean": "Click to learn",
+  "welcomeToDom": "Welcome to Dom Wallet",
+  "multiChain": "Multi chain wallet, secure and user-friendly",
+  "createWallet": "Create Wallet",
+  "importWallet": "Import Wallet"
 }
