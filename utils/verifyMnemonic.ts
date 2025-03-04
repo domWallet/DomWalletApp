@@ -1,6 +1,5 @@
-import bip39 from "bip39"
-
-
+import * as bip39 from '@scure/bip39';
+import { wordlist } from '@scure/bip39/wordlists/english';
 
 // 验证助记词是否合法(满足12或24个助记词)
 export function verifyMnemonic(mnemonic: string): boolean {
@@ -15,20 +14,34 @@ export function verifyPrivateKey(privateKey: string): boolean {
 }
 
 // 验证助记词是否是BIP39规定的单词
-export function validateMnemonic(mnemonic: string) {
-    const words = mnemonic.split(' ');
-    const wordlist = bip39.wordlists.english; // 获取英语单词列表
-
-    for (const word of words) {
-        if (!wordlist.includes(word)) {
-            return false; // 如果任何一个单词不在列表中，则返回 false
-        }
-    }
-
-    return true; // 所有单词都在列表中，返回 true
+export function validateBipMnemonic(mnemonic: string) {
+    console.log("validateBipMnemonic:", mnemonic)
+    let res = bip39.validateMnemonic(mnemonic, wordlist)
+    console.log("res:", res)
+    return res;
 }
 
-
+// 验证助记词或私钥是否合法
+export function validateMnemonicOrPrivateKey(message: string) {
+    if (verifyPrivateKey(message)) {
+        return {
+            isValid: true,
+            type: "privateKey"
+        }
+    }else if (verifyMnemonic(message)) {
+        if (validateBipMnemonic(message)) {
+            return {
+                isValid: true,
+                type: "mnemonic"
+            }
+        }
+    }else {
+        return {
+            isValid: false,
+            type: ""
+        }
+    }
+}
 
 
 

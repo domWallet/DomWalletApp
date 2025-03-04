@@ -2,5 +2,6 @@
   "enter": "Enter mnemonic or private key",
   "ifUse": "If using mnemonic words to import into the wallet, please separate each word with a space.",
   "paste": "Paste",
-  "confirm": "confirm"
+  "confirm": "confirm",
+  "notice": "Notice: Invalid mnemonics or private key."
 }

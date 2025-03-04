@@ -18,6 +18,11 @@ export default function Index() {
     const { t } = useTranslation()
     // <Text>{t('home:welcome')}</Text>
 
+    const gotoTest = ()=>{
+        // @ts-ignore
+        router.push("test")
+    }
+
     const goToImport = ()=>{
         // @ts-ignore
         router.push(Routes.importByMnemonic)
@@ -39,7 +44,7 @@ export default function Index() {
                     bgColor={lightTheme.bg_main_color}
                     bdColor={lightTheme.border_main_color}
                     borderRadius={24}
-                    onClick={goToImport}
+                    onClick={gotoTest}
                 />
             </View>
 
