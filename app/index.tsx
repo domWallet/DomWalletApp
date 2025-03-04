@@ -7,6 +7,8 @@ import { calculateWidth, calculateHeight } from "@/utils/calculatedPercentage";
 import {useEffect} from "react";
 import {lightTheme} from "@/styles/global";
 import MyButton from "@/components/Button";
+import {Href, router} from "expo-router";
+import Routes from "@/constant/routes";
 
 
 const android = Platform.OS === "android";
@@ -15,6 +17,11 @@ const topImg = require("@/assets/app/create/bg1.png");
 export default function Index() {
     const { t } = useTranslation()
     // <Text>{t('home:welcome')}</Text>
+
+    const goToImport = ()=>{
+        // @ts-ignore
+        router.push(Routes.importByMnemonic)
+    }
 
     return (
         <SafeAreaView style={styles.container}>
@@ -32,6 +39,7 @@ export default function Index() {
                     bgColor={lightTheme.bg_main_color}
                     bdColor={lightTheme.border_main_color}
                     borderRadius={24}
+                    onClick={goToImport}
                 />
             </View>
 
@@ -51,6 +59,7 @@ export default function Index() {
                     bgColor={lightTheme.bg_sub_color}
                     bdColor={lightTheme.bg_sub_color}
                     borderRadius={50}
+                    onClick={goToImport}
                 />
 
                 <MyButton
@@ -63,6 +72,7 @@ export default function Index() {
                     bgColor={lightTheme.bg_main_color}
                     bdColor={lightTheme.bg_sub_color}
                     borderRadius={50}
+                    onClick={goToImport}
                 />
             </View>
 

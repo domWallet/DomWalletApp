@@ -2,6 +2,7 @@ import {Image, ImageSourcePropType, StyleSheet, Text, TouchableOpacity} from "re
 import {calculateWidth, calculateHeight} from "@/utils/calculatedPercentage";
 import {useTranslation} from "react-i18next";
 import "../../i18n";
+import {lightTheme} from "@/styles/global";
 
 interface props {
     width: number;
@@ -17,9 +18,27 @@ interface props {
     bgColor: string;
     bdColor: string;
     borderRadius: number;
+    onClick: any;
+    disable?: boolean;
 }
 
-const MyButton = ({ width, height, label, labelSize, labelWight, labelColor, imgPath, imgWidth, imgHeight, gapDistance, bgColor, bdColor, borderRadius}: props)=>{
+const MyButton = ({
+                      width,
+                      height,
+                      label,
+                      labelSize,
+                      labelWight,
+                      labelColor,
+                      imgPath,
+                      imgWidth,
+                      imgHeight,
+                      gapDistance,
+                      bgColor,
+                      bdColor,
+                      borderRadius,
+                      onClick,
+                      disable,
+    }: props)=>{
 
     const { t } = useTranslation();
 
@@ -41,26 +60,34 @@ const MyButton = ({ width, height, label, labelSize, labelWight, labelColor, img
         }
     }
 
+    const handleClick = ()=>{
+        onClick();
+    }
+
     const imgIcon = ()=>{
         return (
             <>
-                <Image source={imgPath} width={trueImgWidth} height={trueImgHeight} alt="Img_Icon"/>
+                <Image source={imgPath} style={{
+                    width: trueImgWidth,
+                    height: trueImgHeight,
+                }} alt="Img_Icon"/>
             </>
         )
     }
 
-    // @ts-ignore
-    // @ts-ignore
+
     return (
         <>
             <TouchableOpacity style={[styles.container, {
                 width: trueWidth,
                 height: trueHeight,
-                backgroundColor: bgColor,
-                borderColor: bdColor,
+                backgroundColor: disable ? lightTheme.bg_minor_color : bgColor,
+                borderColor: disable? lightTheme.bg_minor_color : bdColor,
                 gap: imgPath != null && imgPath != undefined ? trueGapDistance : 0,
                 borderRadius: borderRadius,
-            }]}>
+            }]} onPress={disable ? ()=>{} : handleClick}
+                activeOpacity={disable? 1 : 0.5}
+            >
                 {
                     imgPath != null && imgPath != undefined ? imgIcon() : null
                 }
@@ -70,7 +97,7 @@ const MyButton = ({ width, height, label, labelSize, labelWight, labelColor, img
                     style={{
                     fontSize: trueLabelSize,
                     fontWeight: labelWight,
-                    color: labelColor,
+                    color: disable ? lightTheme.font_minor_color : labelColor,
                     fontFamily: 'PingFang SC'
                 }}>{t(label)}</Text>
             </TouchableOpacity>
