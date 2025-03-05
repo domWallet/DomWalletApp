@@ -6,6 +6,10 @@ import {Platform, SafeAreaView, StyleSheet, Text, View} from "react-native";
 import {heightPercentageToDP as hp} from "react-native-responsive-screen";
 import {router} from "expo-router";
 import {useTranslation} from "react-i18next";
+import Label from "@/components/create/label";
+import {useState} from "react";
+import MyButton from "@/components/Button";
+import Routes from "@/constant/routes";
 
 const android = Platform.OS === "android";
 const leftIcon = require("@/assets/app/create/back.png");
@@ -13,8 +17,16 @@ const leftIcon = require("@/assets/app/create/back.png");
 const CreateHit =  () => {
 
     const {t} = useTranslation()
+    const [submit, setSubmit] = useState([true, true, true])
+
     const handleLeftClick = ()=>{
         router.back();
+    }
+
+
+    const handelNextClick = ()=>{
+        //@ts-ignore
+        router.push(Routes.generateMnemonic)
     }
 
     return (
@@ -36,7 +48,41 @@ const CreateHit =  () => {
                     <Text style={styles.titleInfo}>{t('create:nextStep')}</Text>
                 </View>
 
+                <View style={styles.labelContainer}>
+                    <Label info={"create:lose"} clickFn={()=>{
+                        const temp = [...submit]
+                        temp[0] = !temp[0]
+                        setSubmit(temp)
+                    }}/>
 
+                    <Label info={"create:disclose"} clickFn={()=>{
+                        const temp = [...submit]
+                        temp[1] = !temp[1]
+                        setSubmit(temp)
+                    }}/>
+
+                    <Label info={"create:responsibility"} clickFn={()=>{
+                        const temp = [...submit]
+                        temp[2] = !temp[2]
+                        setSubmit(temp)
+                    }}/>
+                </View>
+
+                <View style={styles.confirmBtnContainer}>
+                    <MyButton
+                        width={630}
+                        height={100}
+                        label="create:generate"
+                        labelSize={35}
+                        labelWight={700}
+                        labelColor={lightTheme.font_sub_color}
+                        bgColor={lightTheme.bg_sub_color}
+                        bdColor={lightTheme.bg_sub_color}
+                        borderRadius={50}
+                        onClick={handelNextClick}
+                        disable={submit[0] || submit[1] || submit[2]}
+                    />
+                </View>
             </SafeAreaView>
         </>
     )
@@ -70,6 +116,17 @@ const styles = StyleSheet.create({
         lineHeight: calculateHeight(34),
         color: lightTheme.font_minor_color,
         flexWrap: "wrap"
+    },
+    labelContainer: {
+        width: "100%",
+        alignItems: "center",
+        marginTop: calculateHeight(52),
+        gap: calculateHeight(30)
+    },
+    confirmBtnContainer:{
+        width: "100%",
+        alignItems: "center",
+        marginTop: calculateHeight(284),
     }
 })
 

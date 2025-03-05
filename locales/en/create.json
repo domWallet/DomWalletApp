@@ -4,7 +4,7 @@
   "lose": "If I lose my mnemonic, my assets will be lost forever!",
   "disclose": "If I disclose or share my mnemonic words with anyone, my assets may be stolen!",
   "responsibility": "The responsibility for ensuring the safety of mnemonic words lies entirely with me!",
-  "mnemonic": "Mnemonic words are used to restore wallets and reset wallet\npasswords. Please accurately copy the mnemonic words and\nstore them in a safe place",
+  "mnemonic": "Mnemonic words are used to restore wallets and reset wallet passwords. Please accurately copy the mnemonic words and store them in a safe place",
   "clear": "Clear text mnemonic words (12 words)",
   "please": "Please do not disclose mnemonic words to anyone",
   "once": "Once mnemonic words are lost, assets cannot be recovered",

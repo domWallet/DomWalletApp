@@ -1,8 +1,10 @@
 import "@/i18n";
 import { calculateWidth, calculateHeight } from "@/utils/calculatedPercentage";
 import {lightTheme} from "@/styles/global";
-import {StyleSheet, Text, View} from "react-native";
+import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {useTranslation} from "react-i18next";
+import {RadioButton} from "react-native-paper";
+import {useState} from "react";
 
 interface props {
     info: string
@@ -11,16 +13,35 @@ interface props {
 
 const Label = ({info, clickFn}: props)=>{
 
+    const [sign, setSign] = useState(false)
+    const [click, setClick] = useState("unchecked")
     const {t} = useTranslation()
+
+    const handleClick = ()=>{
+        setSign(!sign)
+        if(sign){
+            setClick("unchecked")
+        }else {
+            setClick("checked")
+        }
+        clickFn()
+    }
 
     return (
         <>
-            <View style={[styles.container]}>
+            <TouchableOpacity style={[styles.container, {
+                borderColor: click === "checked" ? lightTheme.font_main_color : lightTheme.border_main_color
+            }]} onPress={handleClick}>
 
-                <Text style={styles.infoText}>{t('create:info')}</Text>
+                <Text style={styles.infoText}>{t(info)}</Text>
 
+                <RadioButton
+                    // @ts-ignore
+                    status={click}
+                    color={"#000000"}
+                />
 
-            </View>
+            </TouchableOpacity>
         </>
     )
 }
