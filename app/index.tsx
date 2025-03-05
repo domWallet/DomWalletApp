@@ -28,6 +28,11 @@ export default function Index() {
         router.push(Routes.importByMnemonic)
     }
 
+    const gotoCreate = ()=>{
+        // @ts-ignore
+        router.push(Routes.createHit)
+    }
+
     return (
         <SafeAreaView style={styles.container}>
 
@@ -64,7 +69,7 @@ export default function Index() {
                     bgColor={lightTheme.bg_sub_color}
                     bdColor={lightTheme.bg_sub_color}
                     borderRadius={50}
-                    onClick={goToImport}
+                    onClick={gotoCreate}
                 />
 
                 <MyButton

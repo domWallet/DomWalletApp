@@ -9,7 +9,7 @@ export function verifyMnemonic(mnemonic: string): boolean {
 
 // 验证是否是合法私钥(ETH)
 export function verifyPrivateKey(privateKey: string): boolean {
-    const privateKeyRegex = /^[0-9a-fA-F]{64}$/;
+    const privateKeyRegex = /^(0x)?[0-9a-fA-F]{64}$/;
     return privateKeyRegex.test(privateKey);
 }
 

@@ -17,7 +17,7 @@ i18n
         resources,
         lng: 'en',
         defaultNS: 'home', // 设置默认命名空间
-        ns: ['home', 'header', 'import'], // 设置命名空间列表
+        ns: ['home', 'header', 'import', 'create'], // 设置命名空间列表
         interpolation: {
             escapeValue: false,
         },

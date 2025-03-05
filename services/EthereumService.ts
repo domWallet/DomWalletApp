@@ -1,6 +1,3 @@
-import "react-native-get-random-values";
-import "@ethersproject/shims";
-
 import {
   Wallet,
   isAddress,
@@ -10,9 +7,10 @@ import {
   parseEther,
   HDNodeWallet,
   Mnemonic,
-  AddressLike,
+  AddressLike, ethers,
 } from "ethers";
-import { validateMnemonic } from "bip39";
+import { validateMnemonic } from "@scure/bip39";
+import { wordlist } from '@scure/bip39/wordlists/english';
 import { Alchemy, Network } from "alchemy-sdk";
 import uuid from "react-native-uuid";
 import { truncateBalance } from "../utils/truncateBalance";
@@ -77,7 +75,7 @@ class EthereumService {
       throw new Error("Mnemonic phrase cannot be empty.");
     }
 
-    if (!validateMnemonic(mnemonicPhrase)) {
+    if (!validateMnemonic(mnemonicPhrase, wordlist)) {
       throw new Error("Invalid mnemonic phrase ");
     }
 
@@ -100,7 +98,7 @@ class EthereumService {
       throw new Error("Empty mnemonic phrase ");
     }
 
-    if (!validateMnemonic(mnemonicPhrase)) {
+    if (!validateMnemonic(mnemonicPhrase, wordlist)) {
       throw new Error("Invalid mnemonic phrase ");
     }
 
@@ -257,7 +255,7 @@ class EthereumService {
       throw new Error("Empty mnemonic phrase ");
     }
 
-    if (!validateMnemonic(phrase)) {
+    if (!validateMnemonic(phrase, wordlist)) {
       throw new Error("Invalid mnemonic phrase ");
     }
 
@@ -347,6 +345,12 @@ class EthereumService {
   // 返回当前连接的provider
   getProvider() {
     return this.provider;
+  }
+
+  // 根据私钥获取钱包
+  getWalletByPublicKey(privateKey: string) {
+    const wallet = new ethers.Wallet(privateKey, this.provider);
+    return wallet.address;
   }
 }
 

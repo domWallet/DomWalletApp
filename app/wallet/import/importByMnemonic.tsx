@@ -10,6 +10,10 @@ import {useState} from "react";
 import MyButton from "@/components/Button";
 import {getStringAsync} from "expo-clipboard";
 import {validateMnemonicOrPrivateKey} from "@/utils/verifyMnemonic";
+import {getPrivateKeyIndexBound, savePrivateKeyIndexBound} from "@/utils/useStorageState";
+import useAccountStore from "@/store/accountStore";
+import ethService from "@/services/EthereumService"
+import {HDNodeWallet, Mnemonic, Wallet} from "ethers";
 
 
 const android = Platform.OS === "android";
@@ -23,6 +27,7 @@ const ImportByMnemonic = ()=>{
     const [inputInfo, setInputInfo] = useState("")
     const [pass, setPass] = useState(false)
     const [notice, setNotice] = useState("")
+    const accountStore = useAccountStore()
 
     const handleLeftClick = ()=>{
         router.back();
@@ -43,15 +48,77 @@ const ImportByMnemonic = ()=>{
         if (res?.isValid) {
             setPass(true)
             setNotice("")
+            return res
         }else {
             setPass(false)
             setNotice(t('import:notice'))
+            return res
         }
     }
 
-    const handleConfirmClick = ()=>{
-        verifyInput(inputInfo)
+    const handleConfirmClick = async ()=>{
+        let res = verifyInput(inputInfo)
         // 进入下一步导入钱包步骤
+        if (res?.isValid){
+            // 合法验证完成
+            if (res?.type == "privateKey"){
+                 await handlePrivateKey()
+            }else if (res?.type == "mnemonic"){
+                await handleMnemonic()
+            }
+        }
+    }
+
+    // 处理私钥导入
+    const handlePrivateKey =  async () => {
+        try {
+            let privateKeyIndex = await getPrivateKeyIndexBound()
+            if (privateKeyIndex != null &&  privateKeyIndex != undefined){
+                if (typeof privateKeyIndex != "number"){
+                    privateKeyIndex = parseInt(privateKeyIndex)
+                }
+
+                let address = ethService.getWalletByPublicKey(inputInfo)
+
+                accountStore.setAccountName("Account: " + privateKeyIndex)
+                accountStore.setAccountAddress(address)
+                accountStore.setAccountPrivateKey(inputInfo)
+
+                console.log("import Addr:", address)
+                await savePrivateKeyIndexBound(privateKeyIndex)
+            }
+            // 跳转页面
+
+        }catch (error) {
+            console.error("import err:", error)
+        }
+
+    }
+
+    // 处理助记词导入
+    const handleMnemonic = async () => {
+        try {
+            let privateKeyIndex = await getPrivateKeyIndexBound()
+            if (typeof privateKeyIndex != 'number' && privateKeyIndex != undefined){
+                // @ts-ignore
+                privateKeyIndex = parseInt(privateKeyIndex)
+            }
+            const unusedEthIndex = await ethService.findNextUnusedWalletIndex(inputInfo)
+            const importedEthWallets = await ethService.importAllActiveAddresses(inputInfo, unusedEthIndex);
+            let address = importedEthWallets[0].address
+            let mnemonic = Mnemonic.fromPhrase(inputInfo)
+            let hdNodeWallet = HDNodeWallet.fromMnemonic(mnemonic, "m/44'/60'/0'/0/0")
+            let privateKey = hdNodeWallet.privateKey
+
+            accountStore.setAccountName("Account: " + privateKeyIndex)
+            accountStore.setAccountAddress(address)
+            accountStore.setAccountPrivateKey(privateKey)
+            accountStore.setOtherAccounts(importedEthWallets)
+
+            console.log("import Addr:", address)
+        }catch (error) {
+            console.error("import err:", error)
+        }
     }
 
 

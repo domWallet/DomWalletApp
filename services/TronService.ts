@@ -1,5 +1,8 @@
 import {TronWeb} from "tronweb";
-import { validateMnemonic } from "bip39";
+import * as bip39 from '@scure/bip39';
+import { wordlist } from '@scure/bip39/wordlists/english';
+import {validateMnemonic} from "@scure/bip39";
+import {getTransactionIDHistory} from "@/services/TronWebService";
 
 
 class TronService {
@@ -33,7 +36,7 @@ class TronService {
             throw new Error("Mnemonic phrase cannot be empty.");
         }
 
-        if (!validateMnemonic(mnemonicPhrase)) {
+        if (!bip39.validateMnemonic(mnemonicPhrase, wordlist)) {
             throw new Error("Invalid mnemonic phrase ");
         }
 
@@ -91,8 +94,42 @@ class TronService {
     }
 
     // 查找未使用的钱包地址的索引值
+    async findUnusedAddressIndex(phrase: string, index: number = 0){
+        if (!phrase) {
+            throw new Error("Empty mnemonic phrase ");
+        }
+
+        if (!validateMnemonic(phrase, wordlist)) {
+            throw new Error("Invalid mnemonic phrase ");
+        }
+
+        let currentIndex = index;
+
+        while (true){
+            const path = `m/44'/195'/0'/0/${currentIndex}`;
+            const wallet = TronWeb.fromMnemonic(phrase, path);
+
+            const transactionsIds = await getTransactionIDHistory(wallet?.publicKey, "");
+
+            if ((transactionsIds as any).lenght == 0){
+                break
+            }
+            currentIndex += 1
+        }
+
+        return currentIndex > 0 ? currentIndex + 1 : 0;
+    }
 
     // 导入所有激活的钱包地址
+    async importAllActiveAddresses(phrase: string, index?: number){
+        if (index){
+            const  usedAddress = await this.collectedUsedAddress(phrase, index)
+            return usedAddress
+        }else {
+            const unusedIndex = await this.findUnusedAddressIndex(phrase)
+            return await this.collectedUsedAddress(phrase, unusedIndex)
+        }
+    }
 
     // 收集使用过的钱包地址
     async collectedUsedAddress(phrase: string, unusedIndex: number){
@@ -133,6 +170,12 @@ class TronService {
             console.error("Error confirming Tron transaction:", err);
             return false
         }
+    }
+
+    // 根据私钥获取钱包
+    getWalletPublicKey(privateKey: string){
+        this.tronWeb.setPrivateKey(privateKey)
+        return this.tronWeb.defaultAddress
     }
 
 }
