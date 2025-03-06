@@ -11,5 +11,6 @@
   "backup": "Please do not backup or save through screenshots or network transmission",
   "uninstall": "Please do not uninstall the wallet app easily in any situation",
   "next": "Next",
-  "correct": "Click on the input box and enter the correct mnemonic words in order, or select the mnemonic words below to fill in, in order to verify whether the mnemonic words you have backed up are correct"
+  "correct": "Click on the input box and enter the correct mnemonic words in order, or select the mnemonic words below to fill in, in order to verify whether the mnemonic words you have backed up are correct",
+  "ok": "OK"
 }

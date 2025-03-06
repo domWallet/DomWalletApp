@@ -10,6 +10,7 @@ export default function RootLayout() {
           <Stack.Screen name="wallet/import/importByMnemonic" options={{ headerShown:false}} />
           <Stack.Screen name="wallet/create/createHit" options={{ headerShown:false}} />
           <Stack.Screen name="wallet/create/generateMnemonic" options={{ headerShown:false}} />
+          <Stack.Screen name="wallet/create/confirmMnemonic" options={{ headerShown:false}} />
         </Stack>
       </>
   )

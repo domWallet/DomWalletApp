@@ -11,6 +11,7 @@ const lightTheme = {
     font_main_color: "#000000",
     font_sub_color: "#ffffff",
     font_minor_color: "#A4A4A4",
+    font_warn_color: "#AD0000",
 
     // 边框颜色
     border_main_color: "#ECECEC",

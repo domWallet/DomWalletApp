@@ -1,6 +1,7 @@
 import CryptoES from "crypto-es";
 import * as Crypto from "expo-crypto";
 import { PBKDF2_ITERATIONS } from "../constant/crypto";
+import { Buffer } from "buffer";
 
 export interface EncryptedData {
   cipher: string;
@@ -21,6 +22,7 @@ export const encryptData = async (
   text: string,
   key: string
 ): Promise<EncryptedData> => {
+
   const salt = await Crypto.getRandomBytesAsync(16);
   const iterations = PBKDF2_ITERATIONS;
 

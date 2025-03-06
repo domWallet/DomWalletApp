@@ -10,6 +10,12 @@ import Label from "@/components/create/label";
 import {useState} from "react";
 import MyButton from "@/components/Button";
 import Routes from "@/constant/routes";
+import {ethers} from "ethers";
+import {getPrivateKeyIndexBound, savePhrase} from "@/utils/useStorageState";
+import useAccountStore from "@/store/accountStore";
+import {getRandomBytesAsync} from "expo-crypto";
+
+
 
 const android = Platform.OS === "android";
 const leftIcon = require("@/assets/app/create/back.png");
@@ -19,14 +25,43 @@ const CreateHit =  () => {
     const {t} = useTranslation()
     const [submit, setSubmit] = useState([true, true, true])
 
+    const accountStore = useAccountStore()
+
     const handleLeftClick = ()=>{
         router.back();
     }
 
 
-    const handelNextClick = ()=>{
+    const handelNextClick = async ()=>{
+        const phrase = await generateHDNodeWallet()
         //@ts-ignore
-        router.push(Routes.generateMnemonic)
+        router.push(Routes.generateMnemonic + `?phrase=${phrase}`)
+    }
+
+
+    const generateHDNodeWallet = async ()=>{
+        try {
+            const entropy = await getRandomBytesAsync(16);
+            let privateKeyIndex = await getPrivateKeyIndexBound()
+            if (typeof privateKeyIndex != 'number' && privateKeyIndex != undefined){
+                // @ts-ignore
+                privateKeyIndex = parseInt(privateKeyIndex)
+            }
+            //@ts-ignore
+            const entropyUint8Array = new Uint8Array(entropy);
+            const phrase = ethers.Mnemonic.entropyToPhrase(entropyUint8Array);
+            const mnemonic = ethers.Mnemonic.fromEntropy(entropyUint8Array);
+            const path = `m/44'/60'/0'/0/0`
+            const wallet = ethers.HDNodeWallet.fromMnemonic(mnemonic, path)
+            accountStore.setAccountName("Account: " + privateKeyIndex)
+            accountStore.setAccountAddress(wallet.address)
+            accountStore.setAccountPrivateKey(wallet.privateKey)
+            await savePhrase(phrase)
+            return phrase
+        }catch (error) {
+            console.error("Generate failed:", error)
+            return null
+        }
     }
 
     return (
