@@ -49,8 +49,8 @@ const CreateHit =  () => {
             }
             //@ts-ignore
             const entropyUint8Array = new Uint8Array(entropy);
-            const phrase = ethers.Mnemonic.entropyToPhrase(entropyUint8Array);
             const mnemonic = ethers.Mnemonic.fromEntropy(entropyUint8Array);
+            const phrase = mnemonic.phrase
             const path = `m/44'/60'/0'/0/0`
             const wallet = ethers.HDNodeWallet.fromMnemonic(mnemonic, path)
             accountStore.setAccountName("Account: " + privateKeyIndex)

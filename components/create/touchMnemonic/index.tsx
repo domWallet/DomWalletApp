@@ -5,31 +5,25 @@ import {lightTheme} from "@/styles/global";
 import {useEffect, useState} from "react";
 
 interface props {
+    sign: boolean;
     mnemonic: string;
-    pressFn: ()=>{};
+    pressFn: any;
 }
 
-const TouchMnemonic = ({mnemonic, pressFn}:props)=>{
-
-    const [isPress, setIsPress] = useState("unPress")
-
+const TouchMnemonic = ({sign, mnemonic, pressFn}:props)=>{
 
     const handelPress = ()=>{
-        if (isPress == "unPress"){
-            setIsPress("Press")
-        }else {
-            setIsPress("unPress")
-        }
-        pressFn()
+        pressFn(mnemonic);
     }
 
     return (
         <>
             <TouchableOpacity style={[styles.container, {
-                backgroundColor: isPress == "Press" ? lightTheme.border_main_color : lightTheme.bg_main_color
-            }]} onPress={handelPress}>
+                backgroundColor: sign ? lightTheme.border_main_color : lightTheme.bg_main_color
+            }]} onPress={handelPress} activeOpacity={sign ? 1 : 0.5 }
+            >
                 <Text style={[styles.mnemonicText, {
-                    color: isPress == "Press" ? lightTheme.font_minor_color : lightTheme.font_main_color
+                    color: sign ? lightTheme.font_minor_color : lightTheme.font_main_color
                 }]}>{mnemonic}</Text>
             </TouchableOpacity>
         </>

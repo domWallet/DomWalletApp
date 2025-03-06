@@ -1,4 +1,4 @@
-import {Platform, SafeAreaView, StyleSheet, Text, View} from "react-native";
+import {Platform, SafeAreaView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import "@/i18n";
 import {
     calculateWidth as cw,
@@ -25,40 +25,39 @@ const ConfirmMnemonic = () => {
 
     const list = (phrase as string).split(" ")
 
-    const [errorList, setErrorList] = useState(
+    const [pressList, setPressList] = useState(
         [false, false, false, false, false, false, false, false, false, false, false, false]
     )
     const [displayList, setDisplayList] = useState(
         ["", "", "", "", "", "", "", "", "", "", "", ""]
     )
-    const [pressLength, setPressLength] = useState(0)
+
     const outOfList = useMemo(()=>{
         return shuffleArray(phrase)
     }, [])
-
 
     const handleLeftClick = ()=>{
         router.back();
     }
 
-    const handlePress = (sign: any) => {
+    const handlePressClick = (sign: any) => {
         let tem_mon = outOfList[sign]
+        let temp = [...pressList]
         let tem_display_list = [...displayList]
-        let tem_error_list = [...errorList]
+        temp[sign] = true
         for (let i = 0; i < 12; i++){
             if (tem_display_list[i] === ""){
                 tem_display_list[i] = tem_mon
-                setPressLength(i)
                 break
             }
         }
-        for (let i = 0; i < 12; i++){
-            if (tem_display_list[i] === list[i]){
-                tem_error_list[i] = true
-            }
-        }
-        setErrorList(tem_error_list)
+        setPressList(temp)
         setDisplayList(tem_display_list)
+    }
+
+    const handleReset = ()=>{
+        setPressList([false, false, false, false, false, false, false, false, false, false, false, false])
+        setDisplayList(["", "", "", "", "", "", "", "", "", "", "", ""])
     }
 
     const handleOk = ()=>{
@@ -88,7 +87,7 @@ const ConfirmMnemonic = () => {
                             displayList.map((item, index)=>{
                                 return (
                                     <View key={uuid.v4()} style={[styles.mnemonicItem, {
-                                        borderColor: !errorList[index] && (pressLength >= index) ? lightTheme.font_warn_color : lightTheme.border_main_color
+                                        borderColor: displayList[index] != "" && displayList[index] != list[index] ? lightTheme.font_warn_color : lightTheme.border_main_color
                                     }]}>
                                         <Text style={styles.itemSpan1}>{(index+1)}{" "}</Text>
                                         <Text style={styles.itemSpan2}>{item}</Text>
@@ -106,13 +105,19 @@ const ConfirmMnemonic = () => {
                         outOfList.map(
                             // @ts-ignore
                             (item, index)=>{
-
-                            return <TouchMnemonic key={uuid.v4()} mnemonic={item} pressFn={()=>{
-                                handlePress(index)
-                            }}/>
-                        })
+                                return <TouchMnemonic key={uuid.v4()} sign={pressList[index]} mnemonic={item} pressFn={()=>{
+                                    if (!pressList[index]){
+                                        handlePressClick(index)
+                                    }
+                                }}/>
+                            })
                     }
+
                 </View>
+
+                <TouchableOpacity onPress={handleReset}>
+                    <Text>{"reset"}</Text>
+                </TouchableOpacity>
 
                 <View style={styles.bottomBtn}>
                     <MyButton
