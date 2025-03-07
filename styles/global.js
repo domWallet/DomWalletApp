@@ -15,6 +15,7 @@ const lightTheme = {
 
     // 边框颜色
     border_main_color: "#ECECEC",
+    border_sub_color: "#BDBDBD",
 
 }
 

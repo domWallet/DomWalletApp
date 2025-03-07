@@ -1,23 +1,35 @@
-import {SafeAreaView, StyleSheet} from "react-native";
+import React from 'react'
+import { StyleSheet, View, Text } from 'react-native'
+import { LinearGradient } from 'expo-linear-gradient' // import LinearGradient
 
-
-const Test = () => {
+function Test() {
     return (
-        <SafeAreaView>
-
-        </SafeAreaView>
+        <View style={styles.container}>
+            <LinearGradient
+                colors={['red', 'yellow', 'green' ]}
+                style={styles.linearGradient}
+            >
+                <Text>Vertical Gradient</Text>
+            </LinearGradient>
+        </View>
     )
 }
 
-
 const styles = StyleSheet.create({
     container: {
-        width: "100%",
-        height: "100%",
-        alignItems: "center",
-        justifyContent: "center",
-    }
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    linearGradient: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 5,
+        height: 200,
+        width: 350,
+    },
 })
+
 
 
 export default Test
