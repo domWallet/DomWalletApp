@@ -20,7 +20,7 @@ export default function Index() {
 
     const gotoTest = ()=>{
         // @ts-ignore
-        router.push("test")
+        router.push("(tabs)")
     }
 
     const goToImport = ()=>{
