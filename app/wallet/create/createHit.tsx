@@ -53,7 +53,7 @@ const CreateHit =  () => {
             const phrase = mnemonic.phrase
             const path = `m/44'/60'/0'/0/0`
             const wallet = ethers.HDNodeWallet.fromMnemonic(mnemonic, path)
-            accountStore.setAccountName("Account: " + privateKeyIndex)
+            accountStore.setAccountName("account: " + privateKeyIndex)
             accountStore.setAccountAddress(wallet.address)
             accountStore.setAccountPrivateKey(wallet.privateKey)
             await savePhrase(phrase)

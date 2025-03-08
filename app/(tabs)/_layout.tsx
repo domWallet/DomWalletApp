@@ -27,7 +27,7 @@ const Tab = createBottomTabNavigator();
 
 export default function TabLayout(){
     return (
-        <SafeAreaView style={styles.container} >
+        <>
             <LinearGradient colors={[lightTheme.bg_main_color, lightTheme.border_sub_color, lightTheme.bg_main_color]}
                             start={{x:0, y: 1}}
                             end={{x: 1, y: 1}}
@@ -173,14 +173,11 @@ export default function TabLayout(){
                     }}
                 />
             </Tab.Navigator>
-        </SafeAreaView>
+        </>
     )
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
     iconImage: {
         width: cw(55),
         height: cw(55),

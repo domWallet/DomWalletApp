@@ -80,7 +80,7 @@ const ImportByMnemonic = ()=>{
 
                 let address = ethService.getWalletByPublicKey(inputInfo)
 
-                accountStore.setAccountName("Account: " + privateKeyIndex)
+                accountStore.setAccountName("account: " + privateKeyIndex)
                 accountStore.setAccountAddress(address)
                 accountStore.setAccountPrivateKey(inputInfo)
 
@@ -110,7 +110,7 @@ const ImportByMnemonic = ()=>{
             let hdNodeWallet = HDNodeWallet.fromMnemonic(mnemonic, "m/44'/60'/0'/0/0")
             let privateKey = hdNodeWallet.privateKey
 
-            accountStore.setAccountName("Account: " + privateKeyIndex)
+            accountStore.setAccountName("account: " + privateKeyIndex)
             accountStore.setAccountAddress(address)
             accountStore.setAccountPrivateKey(privateKey)
             accountStore.setOtherAccounts(importedEthWallets)
