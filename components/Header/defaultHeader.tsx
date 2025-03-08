@@ -1,7 +1,9 @@
 import "@/i18n";
 import {Image, ImageSourcePropType, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {calculateWidth, calculateHeight} from "@/utils/calculatedPercentage";
+import {calculateWidth as cw, calculateHeight as ch} from "@/utils/calculatedPercentage";
 import {useTranslation} from "react-i18next";
+import {lightTheme} from "@/styles/global";
 
 interface props {
     leftIcon: ImageSourcePropType;
@@ -16,9 +18,10 @@ interface props {
     rightIconWidth?: number;
     rightIconHeight?: number;
     clickRight?:any;
+    showBottom?:boolean;
 }
 
-const DefaultHeader = ({leftIcon, leftIconWidth, leftIconHeight, clickLeft, info, infoSize, infoWight, infoColor, rightIcon, rightIconWidth, rightIconHeight, clickRight}: props)=>{
+const DefaultHeader = ({leftIcon, leftIconWidth, leftIconHeight, clickLeft, info, infoSize, infoWight, infoColor, rightIcon, rightIconWidth, rightIconHeight, clickRight, showBottom}: props)=>{
 
     const { t } = useTranslation();
     let trueLeftIconWidth = calculateWidth(leftIconWidth);
@@ -40,7 +43,10 @@ const DefaultHeader = ({leftIcon, leftIconWidth, leftIconHeight, clickLeft, info
 
     return (
         <>
-            <View style={styles.container}>
+            <View style={[styles.container, {
+                borderBottomWidth: showBottom ? 2 : 0,
+                borderColor: showBottom ? lightTheme.border_main_color : "",
+            }]}>
 
                 <TouchableOpacity
                     style={styles.btnContainer}
@@ -52,6 +58,16 @@ const DefaultHeader = ({leftIcon, leftIconWidth, leftIconHeight, clickLeft, info
                     }}/>
                 </TouchableOpacity>
 
+                <Text
+                    // @ts-ignore
+                    style={{
+                        fontSize: cw(infoSize as number),
+                        fontWeight: (infoWight as number),
+                        color: infoColor,
+                        position: "absolute",
+                        left: "50%",
+                        transform: [{translateX: "-15%"}],
+                    }}>{t(info as string)}</Text>
 
             </View>
         </>
@@ -68,6 +84,7 @@ const styles = StyleSheet.create({
         paddingLeft: calculateWidth(30),
         paddingRight: calculateWidth(30),
         backgroundColor: "",
+        justifyContent: "space-between"
     },
     btnContainer: {
         alignItems: "center",

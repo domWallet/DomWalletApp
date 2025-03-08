@@ -11,6 +11,7 @@ export default function RootLayout() {
           <Stack.Screen name="wallet/create/generateMnemonic" options={{ headerShown:false}} />
           <Stack.Screen name="wallet/create/confirmMnemonic" options={{ headerShown:false}} />
           <Stack.Screen name="account/tokens" options={{ headerShown:false}} />
+          <Stack.Screen name="account/receiveTokens" options={{ headerShown:false}} />
           <Stack.Screen name="(tabs)" options={{ headerShown:false }}/>
           <Stack.Screen name="test" options={{ headerShown:false}} />
         </Stack>

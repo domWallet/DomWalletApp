@@ -51,16 +51,16 @@ const TokenInfo = ({icon, name, price, change, sign, amount}: props)=>{
 
 const styles = StyleSheet.create({
     container: {
-        width: cw(682),
+        width: cw(630),
         height: ch(70),
         flexDirection: "row",
         alignItems: "center",
+        justifyContent: "space-between",
         marginBottom: ch(60),
     },
     iconImage: {
         width: cw(70),
         height: cw(70),
-        borderRadius: "50%",
     },
     infoContainer: {
         justifyContent: "space-between",

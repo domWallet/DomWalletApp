@@ -64,6 +64,7 @@ const Wallet = ()=>{
         console.log("click")
     }
 
+
     return (
         <>
             <SafeAreaView style={styles.container}>
