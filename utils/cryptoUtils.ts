@@ -36,6 +36,7 @@ export const encryptData = async (
     iv: CryptoES.lib.WordArray.create(iv),
   });
 
+
   return {
     cipher: encrypted.toString(),
     iv: Buffer.from(iv).toString("hex"),

@@ -6,7 +6,7 @@ import {getTransactionIDHistory} from "@/services/TronWebService";
 
 
 class TronService {
-    private tronWeb: TronWeb;
+    public tronWeb: TronWeb;
 
     constructor(
         private hostUrl: string,
@@ -16,6 +16,10 @@ class TronService {
             fullHost: hostUrl,
             headers: { 'TRON-PRO-API-KEY': APIKEY }
         });
+    }
+
+    getProvider() {
+        return this.tronWeb;
     }
 
     // 创建钱包

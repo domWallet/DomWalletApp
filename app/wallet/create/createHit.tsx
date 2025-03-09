@@ -14,8 +14,10 @@ import {ethers} from "ethers";
 import {getPrivateKeyIndexBound, savePhrase} from "@/utils/useStorageState";
 import useAccountStore from "@/store/accountStore";
 import {getRandomBytesAsync} from "expo-crypto";
+import {TronWeb} from "tronweb";
+import {Buffer} from "buffer";
 
-
+global.Buffer = Buffer;
 
 const android = Platform.OS === "android";
 const leftIcon = require("@/assets/app/create/back.png");
@@ -47,12 +49,19 @@ const CreateHit =  () => {
                 // @ts-ignore
                 privateKeyIndex = parseInt(privateKeyIndex)
             }
-            //@ts-ignore
+            //@ts-ignore 生成助记词
             const entropyUint8Array = new Uint8Array(entropy);
             const mnemonic = ethers.Mnemonic.fromEntropy(entropyUint8Array);
             const phrase = mnemonic.phrase
-            const path = `m/44'/60'/0'/0/0`
-            const wallet = ethers.HDNodeWallet.fromMnemonic(mnemonic, path)
+
+            // Ethereum 适配
+            // const path = `m/44'/60'/0'/0/0`
+            // const wallet = ethers.HDNodeWallet.fromMnemonic(mnemonic, path)
+
+            // Tron 适配
+            const path = `m/44'/195'/0'/0/1`
+            const wallet = TronWeb.fromMnemonic(phrase, path)
+
             accountStore.setAccountName("account: " + privateKeyIndex)
             accountStore.setAccountAddress(wallet.address)
             accountStore.setAccountPrivateKey(wallet.privateKey)

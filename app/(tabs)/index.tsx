@@ -6,8 +6,11 @@ import {calculateWidth as cw, calculateHeight as ch} from "@/utils/calculatedPer
 import WalletCard from "@/components/wallet/AccountCard";
 import ActionButton from "@/components/wallet/ActionButton";
 import Tokens from "@/app/account/tokens";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import Tabs from "@/components/Tabs";
+import {useTokenStore} from "@/store/tokenStore";
+import useAccountStore from "@/store/accountStore";
+import {useImmer} from "use-immer";
 
 const android = Platform.OS === "android";
 
@@ -57,11 +60,24 @@ const tokenInfos = [
 
 const Wallet = ()=>{
 
-    const [tabIndex, setTabIndex] = useState(0)
-    const layout = useWindowDimensions();
+
+    const tokenStore = useTokenStore()
+    const accountStore = useAccountStore()
+    const [accountPrice, setAccountPrice] = useState(0)
+
 
     const handleClick = ()=>{
         console.log("click")
+    }
+
+    useEffect(()=>{
+
+    }, [])
+
+
+    const getAccountTokenPrice = async ()=>{
+        const accountAddress = accountStore.accountAddress
+
     }
 
 

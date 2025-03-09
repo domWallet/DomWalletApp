@@ -10,10 +10,11 @@ import {useState} from "react";
 import MyButton from "@/components/Button";
 import {getStringAsync} from "expo-clipboard";
 import {validateMnemonicOrPrivateKey} from "@/utils/verifyMnemonic";
-import {getPrivateKeyIndexBound, savePrivateKeyIndexBound} from "@/utils/useStorageState";
+import {getPrivateKeyIndexBound, savePhrase, savePrivateKey, savePrivateKeyIndexBound} from "@/utils/useStorageState";
 import useAccountStore from "@/store/accountStore";
 import ethService from "@/services/EthereumService"
 import {HDNodeWallet, Mnemonic, Wallet} from "ethers";
+import tronService from "@/services/TronService";
 
 
 const android = Platform.OS === "android";
@@ -78,13 +79,18 @@ const ImportByMnemonic = ()=>{
                     privateKeyIndex = parseInt(privateKeyIndex)
                 }
 
-                let address = ethService.getWalletByPublicKey(inputInfo)
+                // Ethereum适配
+                // let address = ethService.getWalletByPublicKey(inputInfo)
+
+                // Tron适配
+                let address = tronService.getWalletPublicKey(inputInfo)
 
                 accountStore.setAccountName("account: " + privateKeyIndex)
-                accountStore.setAccountAddress(address)
+                accountStore.setAccountAddress(address.hex as string)
                 accountStore.setAccountPrivateKey(inputInfo)
 
                 console.log("import Addr:", address)
+                await savePrivateKey(inputInfo, privateKeyIndex)
                 await savePrivateKeyIndexBound(privateKeyIndex)
             }
             // 跳转页面
@@ -103,18 +109,26 @@ const ImportByMnemonic = ()=>{
                 // @ts-ignore
                 privateKeyIndex = parseInt(privateKeyIndex)
             }
-            const unusedEthIndex = await ethService.findNextUnusedWalletIndex(inputInfo)
-            const importedEthWallets = await ethService.importAllActiveAddresses(inputInfo, unusedEthIndex);
-            let address = importedEthWallets[0].address
-            let mnemonic = Mnemonic.fromPhrase(inputInfo)
-            let hdNodeWallet = HDNodeWallet.fromMnemonic(mnemonic, "m/44'/60'/0'/0/0")
-            let privateKey = hdNodeWallet.privateKey
+            // Ethereum适配
+            // const unusedEthIndex = await ethService.findNextUnusedWalletIndex(inputInfo)
+            // const importedEthWallets = await ethService.importAllActiveAddresses(inputInfo, unusedEthIndex);
+            // let address = importedEthWallets[0].address
+            // let mnemonic = Mnemonic.fromPhrase(inputInfo)
+            // let hdNodeWallet = HDNodeWallet.fromMnemonic(mnemonic, "m/44'/60'/0'/0/0")
+            // let privateKey = hdNodeWallet.privateKey
+
+            // Tron适配
+            const unusedTronIndex = await tronService.findUnusedAddressIndex(inputInfo)
+            const importedWallets = await tronService.importAllActiveAddresses(inputInfo, unusedTronIndex);
+            let address = importedWallets[0].address
+            let privateKey = importedWallets[0].privateKey
 
             accountStore.setAccountName("account: " + privateKeyIndex)
             accountStore.setAccountAddress(address)
             accountStore.setAccountPrivateKey(privateKey)
-            accountStore.setOtherAccounts(importedEthWallets)
+            accountStore.setOtherAccounts(importedWallets)
 
+            await savePhrase(inputInfo)
             console.log("import Addr:", address)
         }catch (error) {
             console.error("import err:", error)
