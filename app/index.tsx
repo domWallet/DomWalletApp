@@ -20,7 +20,7 @@ export default function Index() {
 
     const gotoTest = ()=>{
         // @ts-ignore
-        router.push("/account/receiveTokens")
+        router.push("(tabs)")
     }
 
     const goToImport = ()=>{

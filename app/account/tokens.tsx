@@ -17,7 +17,7 @@ const Tokens = ({tokenInfos}: props) => {
             <SafeAreaView style={styles.container}>
                 <FlatList
                     data={tokenInfos}
-                    renderItem={({item}) => (<TokenInfo icon={item.icon} name={item.name} amount={item.amount} change={item.change} price={item.price} sign={item.sign}/>)}
+                    renderItem={({item}) => (<TokenInfo icon={item.icon} name={item.name} amount={item.amount} change={item.change} price={item.price} sign={item.sign} worth={item.worth}/>)}
                     keyExtractor={(item) => uuid.v4().toString()}
                 />
             </SafeAreaView>

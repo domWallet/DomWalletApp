@@ -6,14 +6,15 @@ import {useEffect, useState} from "react";
 interface props {
     icon: any,
     name: string,
-    price: string,
+    price: string, // 现价
     change: string,
     sign: number,
-    amount: string,
+    amount: string, // 持有数量
+    worth: string,
 }
 
 
-const TokenInfo = ({icon, name, price, change, sign, amount}: props)=>{
+const TokenInfo = ({icon, name, price, change, sign, amount, worth}: props)=>{
 
     const [changeColor, setChangeColor] = useState("")
 
@@ -42,7 +43,7 @@ const TokenInfo = ({icon, name, price, change, sign, amount}: props)=>{
 
             <View style={styles.rightContainer}>
                 <Text style={styles.rightText1}>{amount}</Text>
-                <Text style={styles.rightText2}>${price}</Text>
+                <Text style={styles.rightText2}>${worth}</Text>
             </View>
         </View>
     )
@@ -51,7 +52,7 @@ const TokenInfo = ({icon, name, price, change, sign, amount}: props)=>{
 
 const styles = StyleSheet.create({
     container: {
-        width: cw(630),
+        width: "100%",
         height: ch(70),
         flexDirection: "row",
         alignItems: "center",

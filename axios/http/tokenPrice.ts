@@ -1,33 +1,31 @@
-
 const API_KEY = process.env.EXPO_PUBLIC_COINGECKO_API_KEY
 const COINGECKO_API_URL = process.env.EXPO_PUBLIC_COINGECKO_API_URL
 
 const getTronPriceAndChanges = async () => {
+    debugger
     const url = `${COINGECKO_API_URL}/simple/price?ids=tron&vs_currencies=usd&include_24hr_change=true`
 
-    const option = {
+    const options = {
         method: 'GET',
-        headers: {
-            'accept': 'application/json',
-            'x-cg-demo-api-key': API_KEY,
-        }
-    }
+        headers: {accept: 'application/json', 'x-cg-demo-api-key': API_KEY as string}
+    };
 
     let res = {
         usd: "0",
         usd_24h_change: "0"
     }
     try {
-        // @ts-ignore
-        let response = await fetch(url, option)
-        // @ts-ignore
-        res.usd = response?.tron?.usd
-        // @ts-ignore
-        res.usd_24h_change = response?.tron?.usd_24h_change
+        debugger
+        let result = await fetch(url, options)
+        debugger
+        let res_json = await result.json()
+        res.usd = res_json?.tron?.usd
+        res.usd_24h_change = res_json?.tron?.usd_24h_change
+        return res
     }catch (err) {
-        console.error("Error fetching tron price and changes: ", err)
+        console.log("Error fetching tron price and changes: ", err)
+        return res
     }
-    return res
 }
 
 /*
@@ -36,22 +34,24 @@ const getTronPriceAndChanges = async () => {
 const getTokenPriceAndChanges = async (addresses: string) => {
     const url = `${COINGECKO_API_URL}/simple/token_price/tron?contract_addresses=${addresses}&vs_currencies=usd&include_24hr_change=true`
 
+
     const option = {
         method: 'GET',
         headers: {
-            'accept': 'application/json',
-            'x-cg-demo-api-key': API_KEY,
+            accept: 'application/json',
+            'x-cg-demo-api-key': API_KEY as string,
         }
     }
 
     let res = {}
     try {
-        // @ts-ignore
-        res = await fetch(url, option)
+        let response = await fetch(url, option)
+        let res_json = await response.json()
+        res = res_json
     }catch (err) {
-        console.error("Error fetching tron price and changes: ", err)
+        console.log("Error fetching tron price and changes: ", err)
     }
     return res
 }
 
-
+export {getTronPriceAndChanges, getTokenPriceAndChanges}

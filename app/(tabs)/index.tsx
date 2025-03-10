@@ -10,10 +10,16 @@ import {useEffect, useState} from "react";
 import Tabs from "@/components/Tabs";
 import {useTokenStore} from "@/store/tokenStore";
 import useAccountStore from "@/store/accountStore";
-import {useImmer} from "use-immer";
+import {TRX, USDT, TUSD} from "@/constant/tokens"
+import {getTokenPriceAndChanges, getTronPriceAndChanges} from "@/axios/http/tokenPrice";
+import tokenInfo from "@/components/wallet/TokenInfo";
+import {getTrxBalance, getTusdBalance, getUsdtBalance} from "@/axios/Tron/tokenBalance";
+import {handleDecimal, handlePoint} from "@/utils/handleData";
+
+
 
 const android = Platform.OS === "android";
-
+const Big = require("big.js")
 const photo = require("@/assets/app/wallet/photo.png")
 const send = require("@/assets/app/wallet/Sending.png")
 const receive = require("@/assets/app/wallet/Receive.png")
@@ -58,12 +64,15 @@ const tokenInfos = [
     }
 ]
 
+const tokensInfos = [TRX, USDT, TUSD]
+
 const Wallet = ()=>{
 
 
     const tokenStore = useTokenStore()
     const accountStore = useAccountStore()
     const [accountPrice, setAccountPrice] = useState(0)
+    const [currentTokens, setCurrentTokens] = useState<any[]>([])
 
 
     const handleClick = ()=>{
@@ -71,14 +80,97 @@ const Wallet = ()=>{
     }
 
     useEffect(()=>{
-
+        (async ()=>{
+            await getAccountTokenPrice()
+        })()
     }, [])
 
 
     const getAccountTokenPrice = async ()=>{
-        const accountAddress = accountStore.accountAddress
+        const tokens: any[] = []
+        // const accountAddress = accountStore.accountAddress
+        const address = "TP8hNoDiWDD9i3EAakXphxUXWJuZJUCnyb"
+        let tokenPriceRes = await getTokensPrice()
+        let tokenAmount = await getAccountTokenBalance(address)
+
+        for (let i = 0; i < tokensInfos.length; i++) {
+
+            let usd
+            let change
+            let sign
+            let balance
+            if (tokensInfos[i]?.symbol === "TRX"){
+                usd = tokenPriceRes?.rtx_res?.usd
+                change = tokenPriceRes?.rtx_res?.usd_24h_change
+            }else {
+                let tokenPrices = tokenPriceRes?.tokens_res
+                // @ts-ignore
+                let res = tokenPrices[tokensInfos[i].address as string]
+                usd = res?.usd
+                change = res?.usd_24h_change
+            }
+
+            let amount = handleDecimal(tokenAmount[i], tokensInfos[i].decimals)
+            let amount_big = new Big(amount.toString())
+            let usd_big = new Big(usd)
+            balance = amount_big.times(usd_big)
+            balance = balance.toString()
+            let index = balance.indexOf(".")
+            // 保留两位小数
+            balance = balance.substring(0, index + 3)
+            let e_change = change
+
+            usd = handlePoint(usd.toString(), 2)
+
+            change = handlePoint(change.toString(), 2) + "%"
+
+            if(parseFloat(e_change) > 0){
+                sign = 1
+                change = "+" + change
+            }else if (parseFloat(e_change) < 0){
+                sign = 2
+            }else {
+                sign = 0
+            }
+
+            let token = {
+                address: tokensInfos[i].address,
+                decimals: tokensInfos[i].decimals,
+                icon: tokensInfos[i].icon,
+                name: tokensInfos[i].name,
+                showDecimals: tokensInfos[i].showDecimals,
+                symbol: tokensInfos[i].symbol,
+                price: usd,
+                sign: sign,
+                change: change,
+                amount: handlePoint(amount.toString(), 2),
+                worth: balance,
+            }
+            tokens.push(token)
+        }
+        setCurrentTokens(tokens)
+        tokenStore.setTokens(tokens)
 
     }
+
+    const getTokensPrice = async ()=>{
+        let rtx_res = await getTronPriceAndChanges()
+        let temp_address = `${USDT.address},${TUSD.address}`
+        let tokens_res = await getTokenPriceAndChanges(temp_address)
+        return { rtx_res, tokens_res }
+    }
+
+    const getAccountTokenBalance = async (address: string)=>{
+        let res = []
+        let trxBalance = await getTrxBalance(address)
+        res.push(trxBalance)
+        let usdtBalance = await getUsdtBalance(address)
+        res.push(usdtBalance)
+        let tusdBalance = await getTusdBalance(address)
+        res.push(tusdBalance)
+        return res
+    }
+
 
 
     return (
@@ -102,8 +194,8 @@ const Wallet = ()=>{
 
                 <View style={styles.tabViewContainer}>
                     <Tabs titles={titles}>
-                        <Tokens tokenInfos={tokenInfos}/>
-                        <Tokens tokenInfos={tokenInfos}/>
+                        <Tokens tokenInfos={currentTokens}/>
+                        <Tokens tokenInfos={currentTokens}/>
                     </Tabs>
                 </View>
 

@@ -6,7 +6,7 @@ const trxImg = require("@/assets/app/wallet/TRX.png")
 const USDT = {
     name: 'Tether USD',
     symbol: 'USDT',
-    address: 'TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t',
+    address: 'TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t', //TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t
     decimals: 6,
     showDecimals: 2,
     icon: usdtImg,
