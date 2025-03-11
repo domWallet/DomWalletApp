@@ -22,21 +22,23 @@ const AmountInput = ({width, height, borderRadius, inputSize, inputWight, inputC
 
     const [focus, setFocus] = useState(false)
     const [waring, setWaring] = useState(false)
+    const [inputValue, setInputValue] = useState("")
+
     const handleFocused = ()=>{
         setFocus(true)
     }
 
     const changeValue = (text: string)=>{
         let regex = /^\d*\.?\d*$/
+        if (text == "") {
+            setInputValue(text)
+            return
+        }
         if (regex.test(text)){
             if (text[0] == '.'){
                 // 如果开头为小数点的情况
                 text = '0.' + text.substring(1, text.length)
-            }else if (text[text.length-1] == '.'){
-                // 如果结尾为小数点的情况
-                text = text.substring(0, text.length-1)
             }
-
             let pointIndex = text.indexOf('.')
             if (pointIndex != -1){
                 // 处理输入精度溢出的情况
@@ -44,15 +46,26 @@ const AmountInput = ({width, height, borderRadius, inputSize, inputWight, inputC
                     text = text.substring(0, pointIndex + decimal + 1)
                 }
             }
-
             let amountBig = new Big(amount)
             let textBig = new Big(text)
             if (textBig.gte(amountBig)){
                 text = amount.toString()
             }
             changeValueFn(text)
-        }else {
+            setInputValue(text)
+        }
+    }
+
+    const finalCheck = ()=>{
+        if (inputValue == ""){
             setWaring(true)
+        }else {
+            let index = inputValue.indexOf('.')
+            if (index == inputValue.length - 1){
+                let inputText = inputValue.substring(0, index)
+                setInputValue(inputText)
+                changeValueFn(inputValue.substring(0, index))
+            }
         }
     }
 
@@ -73,7 +86,14 @@ const AmountInput = ({width, height, borderRadius, inputSize, inputWight, inputC
                         color: inputColor,
                         borderWidth: 2,
                         borderColor: focus ? lightTheme.font_main_color : lightTheme.border_main_color,
-                }} value={value} onFocus={handleFocused} onBlur={()=>setFocus(false)} onChangeText={(text) => changeValue(text)}/>
+                    }}
+                    value={inputValue}
+                    onFocus={handleFocused}
+                    onBlur={()=>setFocus(false)}
+                    onChangeText={(text) => changeValue(text)}
+                    keyboardType="numeric"
+                    onEndEditing={finalCheck}
+                />
                 <Text>{"Please Not"}</Text>
             </View>
         </>
