@@ -14,6 +14,9 @@ interface props {
     imgPath?: ImageSourcePropType;
     imgWidth?: number;
     imgHeight?: number;
+    rightIcon?: ImageSourcePropType;
+    iconWidth?: number;
+    iconHeight?: number;
     gapDistance?: number;
     bgColor: string;
     bdColor: string;
@@ -32,6 +35,9 @@ const MyButton = ({
                       imgPath,
                       imgWidth,
                       imgHeight,
+                      rightIcon,
+                      iconWidth,
+                      iconHeight,
                       gapDistance,
                       bgColor,
                       bdColor,
@@ -60,6 +66,18 @@ const MyButton = ({
         }
     }
 
+    let trueRightIconWidth = 0;
+    let trueRightIconHeight = 0;
+    if (rightIcon != null && rightIcon != undefined){
+        if (iconWidth != null && iconWidth != undefined){
+            trueRightIconWidth = calculateWidth(iconWidth)
+        }
+        if (iconHeight != null && iconHeight != undefined){
+            trueRightIconHeight = calculateHeight(iconHeight)
+        }
+
+    }
+
     const handleClick = ()=>{
         onClick();
     }
@@ -75,6 +93,17 @@ const MyButton = ({
         )
     }
 
+
+    const imgRight = ()=>{
+        return (
+            <>
+                <Image source={rightIcon} style={{
+                    width: trueRightIconWidth,
+                    height: trueRightIconHeight,
+                }} alt="Img_Icon"/>
+            </>
+        )
+    }
 
     return (
         <>
@@ -100,6 +129,11 @@ const MyButton = ({
                     color: disable ? lightTheme.font_minor_color : labelColor,
                     fontFamily: 'PingFang SC'
                 }}>{t(label)}</Text>
+
+                {
+                    rightIcon != null && rightIcon != undefined ? imgRight() : null
+                }
+
             </TouchableOpacity>
         </>
     )

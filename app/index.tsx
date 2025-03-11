@@ -20,7 +20,7 @@ export default function Index() {
 
     const gotoTest = ()=>{
         // @ts-ignore
-        router.push("(tabs)")
+        router.push("test")
     }
 
     const goToImport = ()=>{
@@ -93,7 +93,7 @@ export default function Index() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingTop: android ? hp(5) : 0,
+        paddingTop: android ? hp(3) : 0,
         width: "100%",
         height: "100%",
         alignItems: "center",

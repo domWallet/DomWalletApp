@@ -71,7 +71,7 @@ const Wallet = ()=>{
 
     const tokenStore = useTokenStore()
     const accountStore = useAccountStore()
-    const [accountPrice, setAccountPrice] = useState(0)
+    const [accountPrice, setAccountPrice] = useState("0")
     const [currentTokens, setCurrentTokens] = useState<any[]>([])
 
 
@@ -84,6 +84,16 @@ const Wallet = ()=>{
             await getAccountTokenPrice()
         })()
     }, [])
+
+
+    useEffect(()=>{
+        let sum = new Big(0)
+        for (let i = 0; i < currentTokens.length; i++) {
+            let temp = new Big(currentTokens[i].worth)
+            sum = sum.plus(temp)
+        }
+        setAccountPrice(handlePoint(sum.toString(), 2))
+    }, [currentTokens])
 
 
     const getAccountTokenPrice = async ()=>{
@@ -137,7 +147,7 @@ const Wallet = ()=>{
                 address: tokensInfos[i].address,
                 decimals: tokensInfos[i].decimals,
                 icon: tokensInfos[i].icon,
-                name: tokensInfos[i].name,
+                name: tokensInfos[i].symbol,
                 showDecimals: tokensInfos[i].showDecimals,
                 symbol: tokensInfos[i].symbol,
                 price: usd,
@@ -179,7 +189,7 @@ const Wallet = ()=>{
                 <WalletHeader />
 
                 <View style={styles.cardContainer}>
-                    <WalletCard imgPath={photo} accountName={"account: 1"} balance={"100.23"}/>
+                    <WalletCard imgPath={photo} accountName={"Account: 1"} balance={accountPrice}/>
                 </View>
 
                 <View style={styles.actionContainer}>
@@ -206,7 +216,7 @@ const Wallet = ()=>{
 
 const styles = StyleSheet.create({
     container: {
-        paddingTop: android ? hp(5) : 0,
+        paddingTop: android ? hp(3) : 0,
         width: "100%",
         height: "100%",
         alignItems: "center",

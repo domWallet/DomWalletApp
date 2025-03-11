@@ -5,7 +5,7 @@ import * as tokens from "@/constant/tokens"
 const getUsdtBalance = async (address: string) => {
     const tronweb = TronService.tronWeb
     tronweb.setAddress(address)
-    let instance = await tronweb.contract(usdt, 'TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t')
+    let instance = await tronweb.contract(usdt, tokens.USDT.address)
     let res = await instance.balanceOf(address).call() // 返回的是一个bigInt
     return res
 }

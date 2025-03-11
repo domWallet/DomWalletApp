@@ -1,7 +1,7 @@
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Text, BottomNavigation } from 'react-native-paper';
-import {Image, SafeAreaView, StyleSheet, View} from "react-native";
+import {Image, Pressable, SafeAreaView, StyleSheet, View} from "react-native";
 import {lightTheme} from "@/styles/global";
 import { calculateWidth as cw, calculateHeight as ch } from "@/utils/calculatedPercentage";
 
@@ -56,6 +56,9 @@ export default function TabLayout(){
                         lineHeight: ch(34),
                         color: lightTheme.font_minor_color,
                         textAlign: "center",
+                    },
+                    tabBarButton: (props) => {
+                        return (<Pressable {...props} />);
                     }
                 }}
             >
@@ -78,7 +81,7 @@ export default function TabLayout(){
                             <Image source={
                                 focused ? wallet1 : wallet2
                             } style={[styles.iconImage]}/>
-                        )
+                        ),
                     }}
                 />
                 <Tab.Screen

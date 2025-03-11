@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
         width: "100%",
         height: "100%",
         backgroundColor: lightTheme.bg_main_color,
-        paddingTop: android ? hp(5) : 0,
+        paddingTop: android ? hp(3) : 0,
         alignItems: "center",
     },
     cenText:{

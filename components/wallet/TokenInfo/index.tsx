@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     },
     rightText1:{
         fontFamily: "PingFang SC",
-        fontWeight: 400,
+        fontWeight: 800,
         fontSize: cw(24),
         color: lightTheme.font_main_color,
     },

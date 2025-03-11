@@ -2,7 +2,6 @@ const API_KEY = process.env.EXPO_PUBLIC_COINGECKO_API_KEY
 const COINGECKO_API_URL = process.env.EXPO_PUBLIC_COINGECKO_API_URL
 
 const getTronPriceAndChanges = async () => {
-    debugger
     const url = `${COINGECKO_API_URL}/simple/price?ids=tron&vs_currencies=usd&include_24hr_change=true`
 
     const options = {
@@ -15,9 +14,7 @@ const getTronPriceAndChanges = async () => {
         usd_24h_change: "0"
     }
     try {
-        debugger
         let result = await fetch(url, options)
-        debugger
         let res_json = await result.json()
         res.usd = res_json?.tron?.usd
         res.usd_24h_change = res_json?.tron?.usd_24h_change
