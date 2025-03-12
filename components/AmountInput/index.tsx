@@ -2,6 +2,7 @@ import {calculateWidth as cw, calculateHeight as ch} from "@/utils/calculatedPer
 import {StyleSheet, Text, TextInput, View} from "react-native";
 import {lightTheme} from "@/styles/global";
 import {useState} from "react";
+import {useTranslation} from "react-i18next";
 
 interface props {
     width: number,
@@ -23,6 +24,7 @@ const AmountInput = ({width, height, borderRadius, inputSize, inputWight, inputC
     const [focus, setFocus] = useState(false)
     const [waring, setWaring] = useState(false)
     const [inputValue, setInputValue] = useState("")
+    const {t} = useTranslation()
 
     const handleFocused = ()=>{
         setFocus(true)
@@ -72,6 +74,13 @@ const AmountInput = ({width, height, borderRadius, inputSize, inputWight, inputC
     return (
         <>
             <View style={[styles.container]}>
+                <View style={[styles.waringContainer, {
+                    width: cw(width),
+                }]}>
+                    {
+                        waring ? <Text style={styles.waringText}>{t('transfer:warn')}</Text> : null
+                    }
+                </View>
                 <TextInput
                     // @ts-ignore
                     style={{
@@ -94,7 +103,6 @@ const AmountInput = ({width, height, borderRadius, inputSize, inputWight, inputC
                     keyboardType="numeric"
                     onEndEditing={finalCheck}
                 />
-                <Text>{"Please Not"}</Text>
             </View>
         </>
     )
@@ -105,6 +113,19 @@ const styles = StyleSheet.create({
     container: {
         alignItems: "center",
         justifyContent: "center",
+    },
+    waringContainer:{
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "flex-start",
+    },
+    waringText:{
+        fontFamily: 'PingFang SC',
+        fontSize: cw(24),
+        fontWeight: 400,
+        color: lightTheme.font_warn_color,
+        marginBottom: ch(10),
+        marginLeft: cw(30),
     }
 })
 

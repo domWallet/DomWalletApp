@@ -1,10 +1,11 @@
-import {Image, ImageBase, SafeAreaView, StyleSheet, Text, View} from "react-native";
+import {Image, ImageBase, SafeAreaView, StyleSheet, Text, TextInput, View} from "react-native";
 import "../i18n";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp} from  "react-native-responsive-screen";
 import {useTranslation} from "react-i18next";
 import {Platform} from "react-native";
 import { calculateWidth, calculateHeight } from "@/utils/calculatedPercentage";
-import {useEffect} from "react";
+import { calculateWidth as cw, calculateHeight as ch} from "@/utils/calculatedPercentage";
+import {useEffect, useState} from "react";
 import {lightTheme} from "@/styles/global";
 import MyButton from "@/components/Button";
 import {Href, router} from "expo-router";
@@ -16,11 +17,13 @@ const topImg = require("@/assets/app/create/bg1.png");
 
 export default function Index() {
     const { t } = useTranslation()
-    // <Text>{t('home:welcome')}</Text>
+
+    const [email, setEmail] = useState(false)
+    const [auth, setAuth] = useState(false)
 
     const gotoTest = ()=>{
         // @ts-ignore
-        router.push("test")
+        router.push("choose")
     }
 
     const goToImport = ()=>{
@@ -58,11 +61,35 @@ export default function Index() {
                 <Text style={styles.centerInnerText2}>{t('home:multiChain')}</Text>
             </View>
 
+            <View style={styles.inputContainer}>
+                <TextInput
+                    style={[styles.textInput]}
+                    placeholder={t('home:mail')}
+                    onFocus={()=>{
+                        setEmail(true)
+                    }}
+                    onBlur={()=>{
+                        setEmail(false)
+                    }}
+                />
+
+                <TextInput
+                    style={styles.textInput}
+                    placeholder={t('home:auth')}
+                    onFocus={()=>{
+                        setAuth(true)
+                    }}
+                    onBlur={()=>{
+                        setAuth(false)
+                    }}
+                />
+            </View>
+
             <View style={styles.bottomBtnContainer}>
                 <MyButton
                     width={630}
                     height={100}
-                    label="home:createWallet"
+                    label="home:register"
                     labelSize={35}
                     labelWight={700}
                     labelColor={lightTheme.font_sub_color}
@@ -70,19 +97,6 @@ export default function Index() {
                     bdColor={lightTheme.bg_sub_color}
                     borderRadius={50}
                     onClick={gotoCreate}
-                />
-
-                <MyButton
-                    width={630}
-                    height={100}
-                    label="home:importWallet"
-                    labelSize={35}
-                    labelWight={700}
-                    labelColor={lightTheme.font_main_color}
-                    bgColor={lightTheme.bg_main_color}
-                    bdColor={lightTheme.bg_sub_color}
-                    borderRadius={50}
-                    onClick={goToImport}
                 />
             </View>
 
@@ -130,9 +144,28 @@ const styles = StyleSheet.create({
     },
     bottomBtnContainer: {
         alignItems: "center",
-        marginTop: calculateHeight(134),
+        marginTop: calculateHeight(66),
         gap: calculateHeight(40),
     },
 
+    inputContainer:{
+        width: "100%",
+        alignItems: "center",
+        gap: calculateHeight(41),
+        marginTop: ch(84)
+    },
+    textInput:{
+        width: cw(629),
+        height: ch(100),
+        borderWidth: 2,
+        borderColor: lightTheme.border_main_color,
+        borderRadius: 12,
+        fontFamily: 'PingFang SC',
+        fontSize: cw(30),
+        fontWeight: 400,
+        color: lightTheme.font_main_color,
+        paddingLeft: cw(30),
+        paddingRight: cw(30),
+    }
 })
 

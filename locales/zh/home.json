@@ -4,5 +4,9 @@
   "welcomeToDom": "Welcome to Dom Wallet",
   "multiChain": "Multi chain wallet, secure and user-friendly",
   "createWallet": "Create Wallet",
-  "importWallet": "Import Wallet"
+  "importWallet": "Import Wallet",
+  "mail": "E-mail Address",
+  "auth": "Auth Code",
+  "getAuth": "Get Auth Code",
+  "register": "Register/Login"
 }

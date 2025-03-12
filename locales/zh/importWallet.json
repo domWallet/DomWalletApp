@@ -3,5 +3,6 @@
   "ifUse": "If using mnemonic words to import into the wallet, please separate each word with a space.",
   "paste": "Paste",
   "confirm": "confirm",
-  "notice": "Notice: Invalid mnemonics or private key."
+  "notice": "Notice: Invalid mnemonics or private key.",
+  "add": "Add Wallet"
 }
