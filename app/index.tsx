@@ -1,4 +1,14 @@
-import {Image, ImageBase, SafeAreaView, StyleSheet, Text, TextInput, View} from "react-native";
+import {
+    Image,
+    ImageBase,
+    KeyboardAvoidingView,
+    SafeAreaView,
+    StyleSheet,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View
+} from "react-native";
 import "../i18n";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp} from  "react-native-responsive-screen";
 import {useTranslation} from "react-i18next";
@@ -20,6 +30,11 @@ export default function Index() {
 
     const [email, setEmail] = useState(false)
     const [auth, setAuth] = useState(false)
+    const [message, setMessage] = useState("")
+
+    useEffect(() => {
+        setMessage(t('home:getAuth'))
+    }, []);
 
     const gotoTest = ()=>{
         // @ts-ignore
@@ -39,66 +54,80 @@ export default function Index() {
     return (
         <SafeAreaView style={styles.container}>
 
-            <View style={styles.imageContainer}>
-                <Image source={topImg} style={styles.imageTop}/>
+            <KeyboardAvoidingView style={styles.keyBoardContainer} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+                <View style={styles.imageContainer}>
+                    <Image source={topImg} style={styles.imageTop}/>
 
-                <MyButton
-                    width={210}
-                    height={60}
-                    label="home:clickToLean"
-                    labelSize={24}
-                    labelWight={800}
-                    labelColor={lightTheme.font_main_color}
-                    bgColor={lightTheme.bg_main_color}
-                    bdColor={lightTheme.border_main_color}
-                    borderRadius={24}
-                    onClick={gotoTest}
-                />
-            </View>
+                    <MyButton
+                        width={210}
+                        height={60}
+                        label="home:clickToLean"
+                        labelSize={24}
+                        labelWight={800}
+                        labelColor={lightTheme.font_main_color}
+                        bgColor={lightTheme.bg_main_color}
+                        bdColor={lightTheme.border_main_color}
+                        borderRadius={24}
+                        onClick={gotoTest}
+                    />
+                </View>
 
-            <View style={styles.centerContainer}>
-                <Text style={styles.centerInnerText1}>{t('home:welcomeToDom')}</Text>
-                <Text style={styles.centerInnerText2}>{t('home:multiChain')}</Text>
-            </View>
+                <View style={styles.centerContainer}>
+                    <Text style={styles.centerInnerText1}>{t('home:welcomeToDom')}</Text>
+                    <Text style={styles.centerInnerText2}>{t('home:multiChain')}</Text>
+                </View>
 
-            <View style={styles.inputContainer}>
-                <TextInput
-                    style={[styles.textInput]}
-                    placeholder={t('home:mail')}
-                    onFocus={()=>{
-                        setEmail(true)
-                    }}
-                    onBlur={()=>{
-                        setEmail(false)
-                    }}
-                />
+                <View style={styles.inputContainer}>
+                    <TextInput
+                        style={[styles.textInput, {
+                            borderColor: email ? lightTheme.font_main_color : lightTheme.border_main_color,
+                        }]}
+                        placeholder={t('home:mail')}
+                        onFocus={()=>{
+                            setEmail(true)
+                        }}
+                        onBlur={()=>{
+                            setEmail(false)
+                        }}
+                    />
 
-                <TextInput
-                    style={styles.textInput}
-                    placeholder={t('home:auth')}
-                    onFocus={()=>{
-                        setAuth(true)
-                    }}
-                    onBlur={()=>{
-                        setAuth(false)
-                    }}
-                />
-            </View>
+                    <TextInput
+                        style={[styles.textInput, {
+                            paddingRight: cw(220),
+                            borderColor: auth ? lightTheme.font_main_color : lightTheme.border_main_color,
+                        }]}
+                        placeholder={t('home:auth')}
+                        onFocus={()=>{
+                            setAuth(true)
+                        }}
+                        onBlur={()=>{
+                            setAuth(false)
+                        }}
+                    />
 
-            <View style={styles.bottomBtnContainer}>
-                <MyButton
-                    width={630}
-                    height={100}
-                    label="home:register"
-                    labelSize={35}
-                    labelWight={700}
-                    labelColor={lightTheme.font_sub_color}
-                    bgColor={lightTheme.bg_sub_color}
-                    bdColor={lightTheme.bg_sub_color}
-                    borderRadius={50}
-                    onClick={gotoCreate}
-                />
-            </View>
+                    <TouchableOpacity style={styles.submitBtnContainer}>
+                        <Text style={styles.submitBtnText}>{message}</Text>
+                    </TouchableOpacity>
+                </View>
+
+                <View style={styles.bottomBtnContainer}>
+                    <MyButton
+                        width={630}
+                        height={100}
+                        label="home:register"
+                        labelSize={35}
+                        labelWight={700}
+                        labelColor={lightTheme.font_sub_color}
+                        bgColor={lightTheme.bg_sub_color}
+                        bdColor={lightTheme.bg_sub_color}
+                        borderRadius={50}
+                        onClick={gotoCreate}
+                    />
+                </View>
+            </KeyboardAvoidingView>
+
+
+
 
         </SafeAreaView>
     );
@@ -109,7 +138,7 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingTop: android ? hp(3) : 0,
         width: "100%",
-        height: "100%",
+        height: 999,
         alignItems: "center",
         justifyContent: "flex-start",
         backgroundColor: lightTheme.bg_main_color,
@@ -151,8 +180,10 @@ const styles = StyleSheet.create({
     inputContainer:{
         width: "100%",
         alignItems: "center",
+        backgroundColor: lightTheme.bg_main_color,
         gap: calculateHeight(41),
-        marginTop: ch(84)
+        marginTop: ch(84),
+        position: "relative"
     },
     textInput:{
         width: cw(629),
@@ -166,6 +197,27 @@ const styles = StyleSheet.create({
         color: lightTheme.font_main_color,
         paddingLeft: cw(30),
         paddingRight: cw(30),
+    },
+    keyBoardContainer:{
+        flex:1,
+        position: "absolute",
+        bottom: ch(187),
+    },
+    submitBtnContainer:{
+        position: "absolute",
+        alignItems: "center",
+        justifyContent: "center",
+        width: cw(184),
+        height: ch(67),
+        backgroundColor: lightTheme.font_main_color,
+        borderRadius: 12,
+        bottom: 10,
+        right: 10,
+    },
+    submitBtnText:{
+        fontSize: cw(20),
+        fontWeight: 600,
+        fontFamily: 'PingFang SC',
+        color: lightTheme.bg_main_color
     }
 })
-
