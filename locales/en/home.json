@@ -8,5 +8,6 @@
   "mail": "E-mail Address",
   "auth": "Auth Code",
   "getAuth": "Get Auth Code",
-  "register": "Register/Login"
+  "register": "Register/Login",
+  "retry": "Retry"
 }

@@ -56,7 +56,9 @@ const Choose = () => {
                         rightIcon={rightIcon}
                         rightIconWidth={10}
                         rightIconHeight={18}
-                        clickFn={()=>{}}
+                        clickFn={()=>{
+                            router.push("/wallet/import/importByMnemonic")
+                        }}
                     />
 
                     <DefaultLabel
@@ -72,7 +74,9 @@ const Choose = () => {
                         rightIcon={rightIcon}
                         rightIconWidth={10}
                         rightIconHeight={18}
-                        clickFn={()=>{}}
+                        clickFn={()=>{
+                            router.push("/wallet/create/createHit")
+                        }}
                     />
                 </View>
 

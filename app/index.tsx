@@ -20,6 +20,10 @@ import {lightTheme} from "@/styles/global";
 import MyButton from "@/components/Button";
 import {Href, router} from "expo-router";
 import Routes from "@/constant/routes";
+import {Debounce} from "@/utils/Functionutils";
+import {getAuthCodeApi, loginApi} from "@/axios/http/registerAPI";
+import {saveAccessToken} from "@/utils/useStorageState";
+
 
 
 const android = Platform.OS === "android";
@@ -31,6 +35,12 @@ export default function Index() {
     const [email, setEmail] = useState(false)
     const [auth, setAuth] = useState(false)
     const [message, setMessage] = useState("")
+    const [eMailInfo, setEMailInfo] = useState("")
+    const [authInfo, setAuthInfo] = useState("")
+    const [eMailWaring, setEMailWaring] = useState(false)
+    const [authWaring, setAuthWaring] = useState(false)
+    const [timeKeePing, setTimeKeePing] = useState(60)
+    const [getAuth, setGetAuth] = useState(false)
 
     useEffect(() => {
         setMessage(t('home:getAuth'))
@@ -48,8 +58,93 @@ export default function Index() {
 
     const gotoCreate = ()=>{
         // @ts-ignore
-        router.push(Routes.createHit)
+        // router.push(Routes.createHit)
     }
+
+    useEffect(() => {
+
+        let intervalId: any
+
+        if (getAuth && timeKeePing > 0) {
+            intervalId = setInterval(()=>{
+                let temp = timeKeePing - 1
+                setTimeKeePing(temp)
+            }, 1000)
+            setMessage(timeKeePing + "s" + " " + t('home:retry'))
+        }
+
+        if (timeKeePing === 0){
+            setGetAuth(false)
+            setTimeKeePing(60)
+            setMessage(t('home:getAuth'))
+        }
+
+        return () => {
+            // @ts-ignore
+            clearInterval(intervalId);
+        }
+
+    }, [timeKeePing, getAuth]);
+
+    const verifyEmail = (text: any)=>{
+        let regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+        if (eMailInfo == ""){
+            setEMailWaring(true)
+        }else {
+            if (regex.test(text)){
+                // 通过正则表达式验证
+                setEMailWaring(false)
+            }else {
+                setEMailWaring(true)
+            }
+        }
+    }
+
+    const verifyAuth = (text: any)=>{
+        let regex = /^\d{6}$/
+        if (authInfo == ""){
+            setAuthWaring(true)
+        }else {
+            if (regex.test(text)){
+                setAuthWaring(false)
+            }else {
+                setAuthWaring(true)
+            }
+        }
+    }
+
+    const handleChangeEMaile = (text: any) => {
+        let dou_verify = Debounce(verifyEmail, 1000)
+        dou_verify(text)
+        setEMailInfo(text)
+    }
+
+    const getAuthCode = async () =>{
+
+        if (!eMailWaring){
+            // 获取验证码
+            setGetAuth(true)
+            await getAuthCodeApi(eMailInfo)
+        }
+    }
+
+    const handleChangeAuth = (text: any) => {
+        let dou_verify = Debounce(verifyAuth, 1000)
+        dou_verify(text)
+        setAuthInfo(text)
+    }
+
+
+    const loginByCode = async () => {
+        debugger
+        if (authInfo != "" && !eMailWaring){
+            let res = await loginApi(eMailInfo, authInfo)
+            await saveAccessToken(res)
+            // @ts-ignore
+            router.push("choose")
+        }
+    }
+
 
     return (
         <SafeAreaView style={styles.container}>
@@ -78,11 +173,17 @@ export default function Index() {
                 </View>
 
                 <View style={styles.inputContainer}>
+                    <Text style={[styles.warningText, {
+                        opacity: eMailWaring ?  1 : 0,
+                    }]} >{t('transfer:warn')}</Text>
                     <TextInput
                         style={[styles.textInput, {
-                            borderColor: email ? lightTheme.font_main_color : lightTheme.border_main_color,
+                            marginBottom: ch(21),
+                            borderColor: eMailWaring? lightTheme.font_warn_color : (email ? lightTheme.font_main_color : lightTheme.border_main_color),
                         }]}
                         placeholder={t('home:mail')}
+                        value={eMailInfo}
+                        onChangeText={(text) => handleChangeEMaile(text)}
                         onFocus={()=>{
                             setEmail(true)
                         }}
@@ -91,12 +192,17 @@ export default function Index() {
                         }}
                     />
 
+                    <Text style={[styles.warningText, {
+                        opacity: authWaring ?  1 : 0,
+                    }]} >{t('transfer:warn')}</Text>
                     <TextInput
                         style={[styles.textInput, {
                             paddingRight: cw(220),
-                            borderColor: auth ? lightTheme.font_main_color : lightTheme.border_main_color,
+                            borderColor: authWaring? lightTheme.font_warn_color : (auth ? lightTheme.font_main_color : lightTheme.border_main_color),
                         }]}
+                        keyboardType={"numeric"}
                         placeholder={t('home:auth')}
+                        onChangeText={(text) => handleChangeAuth(text)}
                         onFocus={()=>{
                             setAuth(true)
                         }}
@@ -105,8 +211,16 @@ export default function Index() {
                         }}
                     />
 
-                    <TouchableOpacity style={styles.submitBtnContainer}>
-                        <Text style={styles.submitBtnText}>{message}</Text>
+                    <TouchableOpacity
+                        style={[styles.submitBtnContainer, {
+                            backgroundColor: getAuth ? lightTheme.border_main_color : lightTheme.font_main_color,
+                        }]}
+                        activeOpacity={(eMailWaring || getAuth) ? 1 : 0.5}
+                        onPress={getAuthCode}
+                    >
+                        <Text style={[styles.submitBtnText, {
+                            color: getAuth ? lightTheme.font_minor_color : lightTheme.bg_main_color,
+                        }]}>{message}</Text>
                     </TouchableOpacity>
                 </View>
 
@@ -121,7 +235,8 @@ export default function Index() {
                         bgColor={lightTheme.bg_sub_color}
                         bdColor={lightTheme.bg_sub_color}
                         borderRadius={50}
-                        onClick={gotoCreate}
+                        onClick={loginByCode}
+                        disable={authInfo === "" || authWaring}
                     />
                 </View>
             </KeyboardAvoidingView>
@@ -181,9 +296,14 @@ const styles = StyleSheet.create({
         width: "100%",
         alignItems: "center",
         backgroundColor: lightTheme.bg_main_color,
-        gap: calculateHeight(41),
-        marginTop: ch(84),
+        // gap: calculateHeight(41),
+        marginTop: ch(64),
         position: "relative"
+    },
+    warningText:{
+        marginRight: 'auto',
+        marginBottom: ch(10),
+        color: lightTheme.font_warn_color,
     },
     textInput:{
         width: cw(629),
@@ -221,3 +341,4 @@ const styles = StyleSheet.create({
         color: lightTheme.bg_main_color
     }
 })
+

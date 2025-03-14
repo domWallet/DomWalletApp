@@ -24,7 +24,6 @@ export async function savePhrase(phrase: string): Promise<void> {
     await SecureStore.setItemAsync("phraseKey", encryptedData.key);
   } catch (error) {
     console.error("Failed to save the phrase securely.", error);
-    throw error;
   }
 }
 
@@ -37,7 +36,6 @@ export async function savePrivateKey(privateKey: string, index: number): Promise
     await SecureStore.setItemAsync("privateKeyKey_" + index, encryptedData.key);
   }catch (error){
     console.error("Failed to save the private key securely.", error);
-    throw error;
   }
 }
 
@@ -48,7 +46,18 @@ export async function savePrivateKeyIndexBound(index: number): Promise<void> {
     await SecureStore.setItemAsync("privateKeyIndexBound", JSON.stringify(temp_index));
   }catch (error) {
     console.error("Failed to save the privateKey index.", error)
-    throw error;
+  }
+}
+
+// 存储token
+export async function saveAccessToken(token: string): Promise<void> {
+  try {
+    const encryptedData = await generateKeyAndEncryptData(token);
+    await SecureStore.setItemAsync("token", JSON.stringify(encryptedData));
+    // @ts-ignore
+    await SecureStore.setItemAsync("tokenKey", encryptedData.key);
+  }catch (error) {
+    console.error("Failed to save the Access Token.", error);
   }
 }
 
@@ -101,6 +110,24 @@ export async function getPrivateKeyIndexBound(): Promise<number | null> {
     }
   }catch (error) {
     console.error("Failed to retrieve the privateKeyIndexBound.", error)
+    return null;
+  }
+}
+
+// 获取Access Token
+export async function getAccessToken(): Promise<string | null> {
+  try {
+    const encryptedDataString = await SecureStore.getItemAsync("token");
+    const key = await SecureStore.getItemAsync("tokenKey");
+    if (encryptedDataString && key) {
+      const encryptedData: EncryptedData = JSON.parse(encryptedDataString);
+      const token = await decryptDataWithKey(encryptedData, key);
+      return JSON.parse(token);
+    }else {
+      return null;
+    }
+  }catch (error) {
+    console.error("Failed to retrieve the token.", error);
     return null;
   }
 }
