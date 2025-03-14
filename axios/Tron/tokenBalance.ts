@@ -1,6 +1,7 @@
 import { usdt, tusd } from "@/constant/ABI/Tron/token"
 import TronService from "@/services/TronService"
 import * as tokens from "@/constant/tokens"
+import {symbol} from "prop-types";
 
 const getUsdtBalance = async (address: string) => {
     const tronweb = TronService.tronWeb
@@ -26,7 +27,11 @@ const getTrxBalance = async (address: string) => {
     return res
 }
 
+const isTrc10 = (symbol: any) => {
+    return symbol == "TRX"
+}
 
-export {getUsdtBalance, getTusdBalance, getTrxBalance}
+
+export {getUsdtBalance, getTusdBalance, getTrxBalance, isTrc10}
 
 

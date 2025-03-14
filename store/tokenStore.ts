@@ -1,23 +1,24 @@
 import { create } from 'zustand'
 
-interface Token {
-    name: string
-    symbol: string
-    address: string
-    decimals: number
-    showDecimals: number
-    usd: string
-    changes: string
-}
+// interface Token {
+//     name: string
+//     symbol: string
+//     address: string
+//     decimals: number
+//     showDecimals: number
+//     usd: string
+//     changes: string
+//     icon: string
+// }
 
 interface TokenState {
     network: string
-    tokens: Token[]
+    tokens: any[]
 }
 
 interface TokenAction {
     setNetwork: (network: string) => void
-    setTokens: (tokens: Token[]) => void
+    setTokens: (tokens: any[]) => void
 }
 
 // @ts-ignore

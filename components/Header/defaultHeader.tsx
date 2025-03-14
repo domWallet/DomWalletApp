@@ -64,11 +64,15 @@ const DefaultHeader = ({leftIcon, leftIconWidth, leftIconHeight, clickLeft, info
                         fontSize: cw(infoSize as number),
                         fontWeight: (infoWight as number),
                         color: infoColor,
-                        position: "absolute",
-                        left: "50%",
-                        transform: [{translateX: "-15%"}],
                     }}>{t(info as string)}</Text>
 
+                <Text
+                    // @ts-ignore
+                    style={{
+                        fontSize: cw(infoSize as number),
+                        fontWeight: (infoWight as number),
+                        color: infoColor,
+                    }}></Text>
             </View>
         </>
     )

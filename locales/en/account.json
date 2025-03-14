@@ -1,6 +1,14 @@
 {
   "only": "Only supports receiving Tron network assets",
   "address": "Address",
+  "amount": "Amount",
   "paste": "Paste",
-  "share": "Share"
+  "share": "Share",
+  "pleaseAddress": "Please enter your wallet address or domain name",
+  "pleaseAmount": "Please enter the amount of assets to be sent",
+  "balance": "Available Balance",
+  "receiving": "Receiving address",
+  "network": "Network",
+  "networkCharge": "Network charge",
+  "confirm": "confirm"
 }

@@ -15,6 +15,7 @@ import {getTokenPriceAndChanges, getTronPriceAndChanges} from "@/axios/http/toke
 import tokenInfo from "@/components/wallet/TokenInfo";
 import {getTrxBalance, getTusdBalance, getUsdtBalance} from "@/axios/Tron/tokenBalance";
 import {handleDecimal, handlePoint} from "@/utils/handleData";
+import {router} from "expo-router";
 
 
 
@@ -27,42 +28,6 @@ const history = require("@/assets/app/wallet/History.png")
 const other = require("@/assets/app/wallet/Other.png")
 
 const titles = ["Currency", "NFT"]
-const tokenImage = require("@/assets/app/wallet/USDT-2 1.png")
-
-const tokenInfos = [
-    {
-        icon: tokenImage,
-        name: "USDT",
-        price: "3375.03",
-        change: "+4.62%",
-        sign: 1,
-        amount: "23"
-    },
-    {
-        icon: tokenImage,
-        name: "USDT",
-        price: "3375.03",
-        change: "+4.62%",
-        sign: 1,
-        amount: "23"
-    },
-    {
-        icon: tokenImage,
-        name: "USDT",
-        price: "3375.03",
-        change: "+4.62%",
-        sign: 2,
-        amount: "23"
-    },
-    {
-        icon: tokenImage,
-        name: "USDT",
-        price: "3375.03",
-        change: "+4.62%",
-        sign: 2,
-        amount: "23"
-    }
-]
 
 const tokensInfos = [TRX, USDT, TUSD]
 
@@ -77,6 +42,14 @@ const Wallet = ()=>{
 
     const handleClick = ()=>{
         console.log("click")
+    }
+
+    const handleTransfer = () => {
+        console.log("transfer")
+        if (currentTokens.length > 0){
+            // 确保数据请求完毕
+            router.push("/account/selectToken")
+        }
     }
 
     useEffect(()=>{
@@ -132,7 +105,7 @@ const Wallet = ()=>{
 
             usd = handlePoint(usd.toString(), 2)
 
-            change = handlePoint(change.toString(), 2) + "%"
+            change = handlePoint(change.toString(), 4) + "%"
 
             if(parseFloat(e_change) > 0){
                 sign = 1
@@ -158,9 +131,8 @@ const Wallet = ()=>{
             }
             tokens.push(token)
         }
-        setCurrentTokens(tokens)
         tokenStore.setTokens(tokens)
-
+        setCurrentTokens(tokens)
     }
 
     const getTokensPrice = async ()=>{
@@ -193,7 +165,7 @@ const Wallet = ()=>{
                 </View>
 
                 <View style={styles.actionContainer}>
-                    <ActionButton imgPath={send} actionName={"Sending"} action={handleClick}/>
+                    <ActionButton imgPath={send} actionName={"Sending"} action={handleTransfer}/>
 
                     <ActionButton imgPath={receive} actionName={"Receive"} action={handleClick}/>
 

@@ -53,6 +53,7 @@ const AmountInput = ({width, height, borderRadius, inputSize, inputWight, inputC
             if (textBig.gte(amountBig)){
                 text = amount.toString()
             }
+            setWaring(false)
             changeValueFn(text)
             setInputValue(text)
         }
@@ -77,9 +78,9 @@ const AmountInput = ({width, height, borderRadius, inputSize, inputWight, inputC
                 <View style={[styles.waringContainer, {
                     width: cw(width),
                 }]}>
-                    {
-                        waring ? <Text style={styles.waringText}>{t('transfer:warn')}</Text> : null
-                    }
+                    <Text style={[styles.waringText, {
+                        opacity: waring ? 1 : 0
+                    }]}>{t('transfer:warn')}</Text>
                 </View>
                 <TextInput
                     // @ts-ignore
@@ -94,10 +95,12 @@ const AmountInput = ({width, height, borderRadius, inputSize, inputWight, inputC
                         fontWeight: inputWight,
                         color: inputColor,
                         borderWidth: 2,
-                        borderColor: focus ? lightTheme.font_main_color : lightTheme.border_main_color,
+                        borderColor: waring ? lightTheme.font_warn_color : (focus ? lightTheme.font_main_color : lightTheme.border_main_color),
                     }}
-                    value={inputValue}
+                    placeholder={t(value)}
+                    placeholderTextColor={lightTheme.font_minor_color}
                     onFocus={handleFocused}
+                    value={inputValue}
                     onBlur={()=>setFocus(false)}
                     onChangeText={(text) => changeValue(text)}
                     keyboardType="numeric"
@@ -121,11 +124,9 @@ const styles = StyleSheet.create({
     },
     waringText:{
         fontFamily: 'PingFang SC',
-        fontSize: cw(24),
         fontWeight: 400,
         color: lightTheme.font_warn_color,
         marginBottom: ch(10),
-        marginLeft: cw(30),
     }
 })
 

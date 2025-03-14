@@ -1,6 +1,14 @@
 import * as bip39 from '@scure/bip39';
 import { wordlist } from '@scure/bip39/wordlists/english';
 
+
+// 验证是否是合法的Tron地址
+export function verifyTronAddress(address: string): boolean{
+    const Regex = /^(T[1-9A-HJ-NP-Za-km-z]{33}|41[0-9a-fA-F]{40})$/;
+    return Regex.test(address);
+}
+
+
 // 验证助记词是否合法(满足12或24个助记词)
 export function verifyMnemonic(mnemonic: string): boolean {
     const mnemonicRegex = /^([a-z]+\s){11}[a-z]+$|^([a-z]+\s){23}[a-z]+$/;
