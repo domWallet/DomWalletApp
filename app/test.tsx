@@ -4,7 +4,9 @@ import { LinearGradient } from 'expo-linear-gradient'
 import SkeletonItem from "@/components/Skeleton/SkeletonItem";
 import {lightTheme} from "@/styles/global";
 import AmountInput from "@/components/AmountInput";
-import {sendTrx, sendTUSD, sendUSDT} from "@/axios/Tron/transfer"; // import LinearGradient
+import {sendTrx, sendTUSD, sendUSDT} from "@/axios/Tron/transfer";
+import DefaultLoading from "@/components/Loading/defaultLoading";
+import LoadingAnimation from "@/components/Loading/defaultLoading"; // import LinearGradient
 
 function Test() {
     const [value, setValue] = useState(0)
@@ -24,9 +26,10 @@ function Test() {
 
     return (
         <View style={styles.container}>
-            <TouchableOpacity style={styles.linearGradient} onPress={handleTransfer}>
-                <Text>{"转账"}</Text>
-            </TouchableOpacity>
+            {/*<TouchableOpacity style={styles.linearGradient} onPress={handleTransfer}>*/}
+            {/*    <Text>{"转账"}</Text>*/}
+            {/*</TouchableOpacity>*/}
+            <DefaultLoading></DefaultLoading>
         </View>
     )
 }

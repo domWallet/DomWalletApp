@@ -48,7 +48,7 @@ export default function Index() {
 
     const gotoTest = ()=>{
         // @ts-ignore
-        router.push("choose")
+        router.push("test")
     }
 
     const goToImport = ()=>{
