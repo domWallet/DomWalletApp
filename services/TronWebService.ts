@@ -12,7 +12,8 @@ const getTransactionIDHistory = async (address: string, fingerprint: string) => 
         fetch_URL += `&fingerprint=${fingerprint}`
     }
     // @ts-ignore
-    const res:any = await fetch(fetch_URL, options)
+    const response:any = await fetch(fetch_URL, options)
+    const res = await response.json()
     if (res?.success){
         let tep_fingerprint:string = res?.meta?.fingerprint
         let txIds: any = []

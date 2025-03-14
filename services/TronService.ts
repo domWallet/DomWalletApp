@@ -108,14 +108,12 @@ class TronService {
         }
 
         let currentIndex = index;
-
+        debugger
         while (true){
             const path = `m/44'/195'/0'/0/${currentIndex}`;
             const wallet = TronWeb.fromMnemonic(phrase, path);
-
-            const transactionsIds = await getTransactionIDHistory(wallet?.publicKey, "");
-
-            if ((transactionsIds as any).lenght == 0){
+            const transactionsIds = await getTransactionIDHistory(wallet?.address, "");
+            if (transactionsIds.txIds[0] == "" || transactionsIds.txIds[0] == undefined || transactionsIds.txIds[0] == null){
                 break
             }
             currentIndex += 1

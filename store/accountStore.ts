@@ -21,6 +21,7 @@ type accountAction = {
 const useAccountStore = create<accountState & accountAction>((set) => ({
     accountName: '',
     accountAddress: '',
+    accountPrivateKey: '',
     balance: 0,
     transactionHistoryIDs: [],
     otherAccounts: [],

@@ -10,5 +10,13 @@
   "receiving": "Receiving address",
   "network": "Network",
   "networkCharge": "Network charge",
-  "confirm": "confirm"
+  "confirm": "confirm",
+  "beSending": "Be Sending",
+  "sendFailure": "Send Failure",
+  "sentSuccessfully": "Sent Successfully",
+  "close": "Close Page",
+  "view": "View transaction",
+  "sending": "Sending",
+  "failure": "Not sent to",
+  "success": "Successfully sent to"
 }

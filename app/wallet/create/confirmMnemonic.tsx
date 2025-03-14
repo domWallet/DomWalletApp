@@ -60,8 +60,19 @@ const ConfirmMnemonic = () => {
         setDisplayList(["", "", "", "", "", "", "", "", "", "", "", ""])
     }
 
-    const handleOk = ()=>{
+    const verifyOk = () => {
+        for (let i = 0; i < 12; i++){
+            if (displayList[i] != list[i]){
+                return false
+            }
+        }
+        return true
+    }
 
+    const handleOk = ()=>{
+        if (verifyOk()){
+            router.push("/(tabs)")
+        }
     }
 
     return (
@@ -115,9 +126,12 @@ const ConfirmMnemonic = () => {
 
                 </View>
 
-                <TouchableOpacity onPress={handleReset}>
-                    <Text>{"reset"}</Text>
-                </TouchableOpacity>
+                <View style={styles.resetBtnContainer}>
+                    <TouchableOpacity style={styles.resetBtn} onPress={handleReset}>
+                        <Text style={styles.resetBtnText}>{"reset"}</Text>
+                    </TouchableOpacity>
+                </View>
+
 
                 <View style={styles.bottomBtn}>
                     <MyButton
@@ -131,7 +145,20 @@ const ConfirmMnemonic = () => {
                         bdColor={lightTheme.bg_sub_color}
                         borderRadius={50}
                         onClick={handleOk}
-                        disable={true}
+                        disable={
+                            displayList[0] != list[0] ||
+                            displayList[1] != list[1] ||
+                            displayList[2] != list[2] ||
+                            displayList[3] != list[3] ||
+                            displayList[4] != list[4] ||
+                            displayList[5] != list[5] ||
+                            displayList[6] != list[6] ||
+                            displayList[7] != list[7] ||
+                            displayList[8] != list[8] ||
+                            displayList[9] != list[9] ||
+                            displayList[10] != list[10] ||
+                            displayList[11] != list[11]
+                        }
                     />
                 </View>
             </SafeAreaView>
@@ -214,6 +241,27 @@ const styles = StyleSheet.create({
         width: "100%",
         alignItems: "center",
         marginTop: calculateHeight(200),
+    },
+    resetBtnContainer: {
+        width: "100%",
+        alignItems: "center",
+        marginTop: calculateHeight(50),
+    },
+    resetBtn: {
+        width: cw(150),
+        height: ch(60),
+        backgroundColor: lightTheme.font_main_color,
+        borderRadius: 12,
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    resetBtnText: {
+        fontFamily: 'PingFang SC',
+        fontWeight: 600,
+        fontSize: cw(30),
+        lineHeight: ch(34),
+        color: lightTheme.bg_main_color,
+        textAlign: "center",
     }
 })
 

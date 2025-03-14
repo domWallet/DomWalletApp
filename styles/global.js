@@ -6,6 +6,7 @@ const lightTheme = {
     bg_main_color: "#ffffff",
     bg_sub_color: "#000000",
     bg_minor_color: "#F8F8F8",
+    bg_state_color: "#BAFF32",
 
     // 字体颜色
     font_main_color: "#000000",
@@ -13,6 +14,7 @@ const lightTheme = {
     font_minor_color: "#A4A4A4",
     font_warn_color: "#AD0000",
     font_up_color: "#00AD51",
+    font_link_color: "#0505AE",
 
     // 边框颜色
     border_main_color: "#ECECEC",

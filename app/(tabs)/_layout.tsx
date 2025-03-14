@@ -86,7 +86,13 @@ export default function TabLayout(){
                 />
                 <Tab.Screen
                     name="RWA"
-                    component={RWA}
+                    component={index}
+                    listeners={({ navigation, route }) => ({
+                        tabPress: e => {
+                            e.preventDefault(); // 阻止默认的导航行为
+                            // 这里可以添加其他逻辑，例如显示一个提示信息
+                        },
+                    })}
                     options={{
                         title: "RWA",
                         tabBarLabel: ({focused}) => {
@@ -108,7 +114,13 @@ export default function TabLayout(){
                 />
                 <Tab.Screen
                     name="Trade"
-                    component={Trade}
+                    component={index}
+                    listeners={({ navigation, route }) => ({
+                        tabPress: e => {
+                            e.preventDefault(); // 阻止默认的导航行为
+                            // 这里可以添加其他逻辑，例如显示一个提示信息
+                        },
+                    })}
                     options={{
                         title: "Trade",
                         tabBarLabel: ({focused}) => {
@@ -134,6 +146,11 @@ export default function TabLayout(){
                 <Tab.Screen
                     name="Find"
                     component={Find}
+                    listeners={({ navigation, route }) => ({
+                        tabPress: e => {
+                            e.preventDefault(); // 阻止默认的导航行为
+                        },
+                    })}
                     options={{
                         title: "Find",
                         tabBarLabel: ({focused}) => {
@@ -156,6 +173,12 @@ export default function TabLayout(){
                 <Tab.Screen
                     name="Mine"
                     component={Mine}
+                    listeners={({ navigation, route }) => ({
+                        tabPress: e => {
+                            e.preventDefault(); // 阻止默认的导航行为
+                            // 这里可以添加其他逻辑，例如显示一个提示信息
+                        },
+                    })}
                     options={{
                         title: "Mine",
                         tabBarLabel: ({focused}) => {

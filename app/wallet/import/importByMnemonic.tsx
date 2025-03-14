@@ -67,6 +67,7 @@ const ImportByMnemonic = ()=>{
             }else if (res?.type == "mnemonic"){
                 await handleMnemonic()
             }
+            router.push("/(tabs)")
         }
     }
 

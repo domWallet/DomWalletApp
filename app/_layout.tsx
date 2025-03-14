@@ -1,7 +1,14 @@
-import { Stack } from "expo-router";
+import {router, Stack} from "expo-router";
 import Routes from "@/constant/routes";
+import {useEffect} from "react";
+import {getPhrase, getPrivateKey, getPrivateKeyIndexBound} from "@/utils/useStorageState";
+import tronService from "@/services/TronService";
+import useAccountStore from "@/store/accountStore";
 
 export default function RootLayout() {
+
+  const accountStore = useAccountStore()
+
   return (
       <>
         <Stack>
@@ -16,6 +23,7 @@ export default function RootLayout() {
           <Stack.Screen name="account/selectToken" options={{ headerShown:false}} />
           <Stack.Screen name="account/transferToken" options={{ headerShown:false}} />
           <Stack.Screen name="account/transferSigend" options={{ headerShown:false}} />
+          <Stack.Screen name="account/transferResult" options={{ headerShown:false}} />
           <Stack.Screen name="(tabs)" options={{ headerShown:false }}/>
           <Stack.Screen name="test" options={{ headerShown:false}} />
         </Stack>

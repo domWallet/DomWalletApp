@@ -49,6 +49,7 @@ const TransferToken = () => {
 
     const handleSend = async () => {
         if (address != "" && amount != 0 && addressError == false){
+            debugger
             // @ts-ignore 进入确认交易页面
             let tokenAddress = selectToken?.address
             // @ts-ignore
@@ -64,6 +65,10 @@ const TransferToken = () => {
                 // 交易rc20token
                 costData = await getSendTrc20Fee(address, amount.toString(), from, decimals, tokenAddress)
             }
+            // 多链情况需要优化
+            let feeData = costData.toFixed(2) + " " + "Trx"
+            // @ts-ignore
+            router.push('/account/transferSigend' + `?receive=${address}&amount=${amount}&symbol=${tokenSymbol}&fee=${feeData}`)
         }
     }
 

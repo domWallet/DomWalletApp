@@ -70,7 +70,7 @@ export async function getPhrase(): Promise<string | null> {
     if (encryptedDataString && key) {
       const encryptedData: EncryptedData = JSON.parse(encryptedDataString);
       const phrase = await decryptDataWithKey(encryptedData, key);
-      return JSON.parse(phrase);
+      return phrase;
     } else {
       return null;
     }
@@ -89,7 +89,7 @@ export async function getPrivateKey(index: number): Promise<string | null> {
     if (encryptedDataString && key) {
       const encryptedData: EncryptedData = JSON.parse(encryptedDataString);
       const privateKey = await decryptDataWithKey(encryptedData, key);
-      return JSON.parse(privateKey);
+      return privateKey;
     }else {
       return null;
     }
@@ -104,7 +104,7 @@ export async function getPrivateKeyIndexBound(): Promise<number | null> {
   try {
     const indexBound = await SecureStore.getItemAsync("privateKeyIndexBound");
     if (indexBound) {
-      return JSON.parse(indexBound);
+      return parseInt(indexBound);
     }else {
       return 0;
     }
@@ -122,7 +122,7 @@ export async function getAccessToken(): Promise<string | null> {
     if (encryptedDataString && key) {
       const encryptedData: EncryptedData = JSON.parse(encryptedDataString);
       const token = await decryptDataWithKey(encryptedData, key);
-      return JSON.parse(token);
+      return token;
     }else {
       return null;
     }

@@ -2,6 +2,9 @@ import React from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
 import { calculateWidth as cw, calculateHeight as ch } from "@/utils/calculatedPercentage";
 import {lightTheme} from "@/styles/global";
+import {useTranslation} from "react-i18next";
+import useAccountStore from "@/store/accountStore";
+import {formatAddress} from "@/utils/addressUtils";
 
 interface props {
     imgPath: any,
@@ -10,6 +13,10 @@ interface props {
 }
 
 const WalletCard = ({imgPath, accountName, balance}: props) => {
+
+    const {t} = useTranslation();
+    const accountStore = useAccountStore()
+
     return (
         <>
             <View style={styles.container}>
@@ -18,6 +25,15 @@ const WalletCard = ({imgPath, accountName, balance}: props) => {
                         <Image source={imgPath} style={styles.walletIcon} />
                         <View style={styles.walletName}>
                             <Text style={styles.walletNameText}>{accountName}</Text>
+                        </View>
+
+                        <View style={{
+                            flexDirection: "row",
+                            marginLeft: "auto",
+                            alignItems: "center"
+                        }}>
+                            <Text style={[styles.walletAddressText]}>{t('account:address')} {":"}</Text>
+                            <Text style={styles.walletAddressText}>{formatAddress(accountStore.accountAddress, 8, 5)}</Text>
                         </View>
                     </View>
                     <View style={styles.balance}>
@@ -52,12 +68,21 @@ const styles = StyleSheet.create({
         height: cw(50),
         borderRadius: 50,
     },
-    walletName: {},
+    walletName: {
+        marginRight: 0,
+    },
     walletNameText: {
         fontSize: cw(34),
         fontWeight: 600,
         lineHeight: ch(48),
         color: lightTheme.bg_main_color,
+        fontFamily: "PingFang SC",
+    },
+    walletAddressText: {
+        fontSize: cw(25),
+        fontWeight: 400,
+        lineHeight: ch(48),
+        color: lightTheme.font_minor_color,
         fontFamily: "PingFang SC",
     },
     balance: {

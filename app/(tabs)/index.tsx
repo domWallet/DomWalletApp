@@ -16,6 +16,8 @@ import tokenInfo from "@/components/wallet/TokenInfo";
 import {getTrxBalance, getTusdBalance, getUsdtBalance} from "@/axios/Tron/tokenBalance";
 import {handleDecimal, handlePoint} from "@/utils/handleData";
 import {router} from "expo-router";
+import {getPhrase, getPrivateKey, getPrivateKeyIndexBound} from "@/utils/useStorageState";
+import tronService from "@/services/TronService";
 
 
 
@@ -41,7 +43,7 @@ const Wallet = ()=>{
 
 
     const handleClick = ()=>{
-        console.log("click")
+        router.push("/account/receiveTokens")
     }
 
     const handleTransfer = () => {
@@ -71,8 +73,7 @@ const Wallet = ()=>{
 
     const getAccountTokenPrice = async ()=>{
         const tokens: any[] = []
-        // const accountAddress = accountStore.accountAddress
-        const address = "TP8hNoDiWDD9i3EAakXphxUXWJuZJUCnyb"
+        const address = accountStore.accountAddress
         let tokenPriceRes = await getTokensPrice()
         let tokenAmount = await getAccountTokenBalance(address)
 
@@ -161,7 +162,7 @@ const Wallet = ()=>{
                 <WalletHeader />
 
                 <View style={styles.cardContainer}>
-                    <WalletCard imgPath={photo} accountName={"Account: 1"} balance={accountPrice}/>
+                    <WalletCard imgPath={photo} accountName={accountStore.accountName} balance={accountPrice}/>
                 </View>
 
                 <View style={styles.actionContainer}>
@@ -169,9 +170,9 @@ const Wallet = ()=>{
 
                     <ActionButton imgPath={receive} actionName={"Receive"} action={handleClick}/>
 
-                    <ActionButton imgPath={history} actionName={"History"} action={handleClick}/>
+                    <ActionButton imgPath={history} actionName={"History"} action={()=>{}}/>
 
-                    <ActionButton imgPath={other} actionName={"Other"} action={handleClick}/>
+                    <ActionButton imgPath={other} actionName={"Other"} action={()=>{}}/>
                 </View>
 
                 <View style={styles.tabViewContainer}>

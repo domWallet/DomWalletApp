@@ -3,11 +3,12 @@ import {calculateWidth as cw, calculateHeight as ch} from "@/utils/calculatedPer
 import {Platform, SafeAreaView, StyleSheet, TextInput, View, Text} from "react-native";
 import {heightPercentageToDP as hp} from "react-native-responsive-screen";
 import QRCode from 'react-native-qrcode-svg';
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import DefaultHeader from "@/components/Header/defaultHeader";
 import {router} from "expo-router";
 import {useTranslation} from "react-i18next";
 import MyButton from "@/components/Button";
+import useAccountStore from "@/store/accountStore";
 
 const android = Platform.OS === "android";
 const leftIcon = require("@/assets/app/create/back.png");
@@ -16,9 +17,13 @@ const share = require("@/assets/app/wallet/Share.png");
 
 const ReceiveTokens = () => {
 
-    const [qrValue, setQrValue] = useState('0x838Df34900c10c319ced8Ad6D229EC3631111Cc9');
-
+    const [qrValue, setQrValue] = useState('Dom Wallet');
+    const accountStore = useAccountStore()
     const {t} = useTranslation()
+
+    useEffect(()=>{
+        setQrValue(accountStore.accountAddress)
+    }, [])
 
     const handleLeftClick = ()=>{
         router.back();

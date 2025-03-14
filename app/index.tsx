@@ -22,7 +22,15 @@ import {Href, router} from "expo-router";
 import Routes from "@/constant/routes";
 import {Debounce} from "@/utils/Functionutils";
 import {getAuthCodeApi, loginApi} from "@/axios/http/registerAPI";
-import {saveAccessToken} from "@/utils/useStorageState";
+import {
+    getPhrase,
+    getPrivateKey,
+    getPrivateKeyIndexBound,
+    saveAccessToken,
+    savePrivateKey, savePrivateKeyIndexBound
+} from "@/utils/useStorageState";
+import tronService from "@/services/TronService";
+import useAccountStore from "@/store/accountStore";
 
 
 
@@ -41,24 +49,56 @@ export default function Index() {
     const [authWaring, setAuthWaring] = useState(false)
     const [timeKeePing, setTimeKeePing] = useState(60)
     const [getAuth, setGetAuth] = useState(false)
+    const accountStore = useAccountStore()
 
     useEffect(() => {
         setMessage(t('home:getAuth'))
     }, []);
 
+    useEffect(()=>{
+        (async () => {
+            let index = await getPrivateKeyIndexBound()
+            let privateKey
+            let phrase
+            if (index == 0 || index == undefined){
+                privateKey = await getPrivateKey(0)
+            }else {
+                privateKey = await getPrivateKey(index - 1)
+            }
+            phrase = await getPhrase()
+            if (privateKey != null && phrase == null){
+                let address = tronService.getWalletPublicKey(privateKey)
+                accountStore.setAccountName("account: " + index)
+                accountStore.setAccountAddress(address.hex as string)
+                accountStore.setAccountPrivateKey(privateKey)
+
+                router.push("/(tabs)")
+            }else if (privateKey == null && phrase != null){
+                const wallet = await tronService.restoreWalletFromPhrase(phrase)
+                let address = wallet.address
+                let privateKey = wallet.privateKey
+                accountStore.setAccountName("account: " + index)
+                accountStore.setAccountAddress(address)
+                accountStore.setAccountPrivateKey(privateKey)
+
+                router.push("/(tabs)")
+            }else if (privateKey != null && phrase != null){
+                const wallet = await tronService.restoreWalletFromPhrase(phrase)
+                let address = wallet.address
+                let privateKey = wallet.privateKey
+                accountStore.setAccountName("account: " + index)
+                accountStore.setAccountAddress(address)
+                accountStore.setAccountPrivateKey(privateKey)
+
+                router.push("/(tabs)")
+            }
+        })()
+    }, [])
+
+
     const gotoTest = ()=>{
         // @ts-ignore
-        router.push("/account/transferSigend")
-    }
-
-    const goToImport = ()=>{
-        // @ts-ignore
-        router.push(Routes.importByMnemonic)
-    }
-
-    const gotoCreate = ()=>{
-        // @ts-ignore
-        // router.push(Routes.createHit)
+        router.push("")
     }
 
     useEffect(() => {
