@@ -1,9 +1,9 @@
 
+const Big = require('big.js')
 
 export const handleDecimal = (balance: number | bigint, decimals: number)=>{
-    let res = BigInt(balance)
-    res = res / BigInt(10 ** (decimals))
-    return res
+    let res = new Big(balance).div(new Big(Math.pow(10, decimals)))
+    return res.toString()
 }
 
 export const handleShowDecimal = (balance: number | bigint, showDecimals: number)=>{

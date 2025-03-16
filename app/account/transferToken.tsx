@@ -98,8 +98,8 @@ const TransferToken = () => {
                 {/*Header*/}
                 <DefaultHeader
                     leftIcon={leftIcon}
-                    leftIconWidth={18.74}
-                    leftIconHeight={33.76}
+                    leftIconWidth={25}
+                    leftIconHeight={42}
                     info={"header:sending"}
                     infoSize={30}
                     infoWight={600}

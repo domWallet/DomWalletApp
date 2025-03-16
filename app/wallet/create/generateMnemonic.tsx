@@ -37,8 +37,8 @@ const GenerateMnemonic = () => {
                 {/*Header*/}
                 <DefaultHeader
                     leftIcon={leftIcon}
-                    leftIconWidth={18.74}
-                    leftIconHeight={33.76}
+                    leftIconWidth={25}
+                    leftIconHeight={42}
                     clickLeft={handleLeftClick}
                 />
 
@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         flexWrap: "wrap",
         marginTop: calculateHeight(50),
-        gap: calculateWidth(30),
+        gap: calculateWidth(25),
         justifyContent: "space-between"
     },
     mnemonicItem: {

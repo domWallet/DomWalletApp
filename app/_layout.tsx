@@ -1,19 +1,15 @@
-import {router, Stack} from "expo-router";
-import Routes from "@/constant/routes";
-import {useEffect} from "react";
-import {getPhrase, getPrivateKey, getPrivateKeyIndexBound} from "@/utils/useStorageState";
-import tronService from "@/services/TronService";
-import useAccountStore from "@/store/accountStore";
+import {Stack} from "expo-router";
 
 export default function RootLayout() {
 
-  const accountStore = useAccountStore()
-
   return (
       <>
-        <Stack>
+        <Stack initialRouteName={"(tabs)"}>
           <Stack.Screen name="index" options={{ headerShown:false}} />
+          <Stack.Screen name="login" options={{ headerShown:false}} />
           <Stack.Screen name="choose" options={{ headerShown:false}} />
+          <Stack.Screen name="(tabs)" options={{ headerShown:false }}/>
+          <Stack.Screen name="splashPage/walletSkeleton" options={{ headerShown:false}} />
           <Stack.Screen name="wallet/import/importByMnemonic" options={{ headerShown:false}} />
           <Stack.Screen name="wallet/create/createHit" options={{ headerShown:false}} />
           <Stack.Screen name="wallet/create/generateMnemonic" options={{ headerShown:false}} />
@@ -24,7 +20,6 @@ export default function RootLayout() {
           <Stack.Screen name="account/transferToken" options={{ headerShown:false}} />
           <Stack.Screen name="account/transferSigend" options={{ headerShown:false}} />
           <Stack.Screen name="account/transferResult" options={{ headerShown:false}} />
-          <Stack.Screen name="(tabs)" options={{ headerShown:false }}/>
           <Stack.Screen name="test" options={{ headerShown:false}} />
         </Stack>
       </>

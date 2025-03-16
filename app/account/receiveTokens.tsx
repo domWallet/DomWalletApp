@@ -9,6 +9,7 @@ import {router} from "expo-router";
 import {useTranslation} from "react-i18next";
 import MyButton from "@/components/Button";
 import useAccountStore from "@/store/accountStore";
+import * as Clipboard from 'expo-clipboard';
 
 const android = Platform.OS === "android";
 const leftIcon = require("@/assets/app/create/back.png");
@@ -17,13 +18,22 @@ const share = require("@/assets/app/wallet/Share.png");
 
 const ReceiveTokens = () => {
 
-    const [qrValue, setQrValue] = useState('Dom Wallet');
+    const [qrValue, setQrValue] = useState('Dom Login');
     const accountStore = useAccountStore()
     const {t} = useTranslation()
 
     useEffect(()=>{
         setQrValue(accountStore.accountAddress)
     }, [])
+
+
+    const handleCopyClick = async ()=>{
+        try {
+            await Clipboard.setStringAsync(qrValue);
+        }catch (error) {
+            console.error("Copy failed:", error)
+        }
+    }
 
     const handleLeftClick = ()=>{
         router.back();
@@ -36,8 +46,8 @@ const ReceiveTokens = () => {
                 {/*Header*/}
                 <DefaultHeader
                     leftIcon={leftIcon}
-                    leftIconWidth={18.74}
-                    leftIconHeight={33.76}
+                    leftIconWidth={25}
+                    leftIconHeight={42}
                     clickLeft={handleLeftClick}
                     info={"header:receive"}
                     infoSize={30}
@@ -82,7 +92,7 @@ const ReceiveTokens = () => {
                         gapDistance={10}
                         bgColor={lightTheme.bg_main_color}
                         bdColor={lightTheme.border_main_color}
-                        onClick={()=>{}}
+                        onClick={handleCopyClick}
                         borderRadius={20}
                     />
 

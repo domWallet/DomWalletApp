@@ -4,18 +4,10 @@ import {lightTheme} from "@/styles/global";
 import {calculateWidth as cw, calculateHeight as ch} from "@/utils/calculatedPercentage";
 import SkeletonItem from "@/components/Skeleton/SkeletonItem";
 import uuid from "react-native-uuid";
-import {useEffect, useState} from "react";
-import {getPhrase, getPrivateKey, getPrivateKeyIndexBound} from "@/utils/useStorageState";
-import tronService from "@/services/TronService";
-import * as SplashScreen from "expo-splash-screen";
-import useAccountStore from "@/store/accountStore";
-import {router, useRouter} from "expo-router";
 
 const android = Platform.OS === "android";
 
-const Index = () => {
-
-    const accountStore = useAccountStore()
+const WalletSkeleton = () => {
 
     const tokenInfoSkeleton = ()=>{
         return (
@@ -53,58 +45,6 @@ const Index = () => {
             </>
         )
     }
-
-    const router = useRouter()
-
-    useEffect(() => {
-        (async () => {
-            debugger
-            // 加载私钥操作
-            let index = await getPrivateKeyIndexBound()
-            let privateKey
-            let phrase
-            if (index == 0 || index == undefined){
-                privateKey = await getPrivateKey(0)
-            }else {
-                privateKey = await getPrivateKey(index - 1)
-            }
-            phrase = await getPhrase()
-
-            if ((privateKey == "" && phrase == "") || (privateKey == null && phrase == null) || (privateKey == undefined && phrase == undefined)){
-                // @ts-ignore
-                router.push("login")
-            }else {
-                if (privateKey != null && phrase == null){
-                    let address = tronService.getWalletPublicKey(privateKey)
-                    accountStore.setAccountName("account: " + index)
-                    accountStore.setAccountAddress(address.base58 as string)
-                    accountStore.setAccountPrivateKey(privateKey)
-                    // @ts-ignore
-                    router.push("(tabs)")
-                }else if (privateKey == null && phrase != null){
-                    let tronweb = tronService.tronWeb
-                    const wallet = tronweb.fromMnemonic(phrase, "m/44'/195'/0'/0/1")
-                    let address = wallet.address
-                    let privateKey = wallet.privateKey
-                    accountStore.setAccountName("account: " + index)
-                    accountStore.setAccountAddress(address)
-                    accountStore.setAccountPrivateKey(privateKey)
-                    // @ts-ignore
-                    router.push("(tabs)")
-                }else if (privateKey != null && phrase != null){
-                    let tronweb = tronService.tronWeb
-                    const wallet = tronweb.fromMnemonic(phrase, "m/44'/195'/0'/0/1")
-                    let address = wallet.address
-                    let privateKey = wallet.privateKey
-                    accountStore.setAccountName("account: " + index)
-                    accountStore.setAccountAddress(address)
-                    accountStore.setAccountPrivateKey(privateKey)
-                    // @ts-ignore
-                    router.push("(tabs)")
-                }
-            }
-        })()
-    }, []);
 
     return (
         <>
@@ -164,7 +104,6 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         paddingLeft: cw(30),
         paddingRight: cw(30),
-        marginTop: ch(200),
     },
     cardView: {
         marginTop: ch(30),
@@ -218,7 +157,7 @@ const styles = StyleSheet.create({
     }
 })
 
-export default Index
+export default WalletSkeleton
 
 
 

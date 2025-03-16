@@ -15,6 +15,7 @@ import useAccountStore from "@/store/accountStore";
 import ethService from "@/services/EthereumService"
 import {HDNodeWallet, Mnemonic, Wallet} from "ethers";
 import tronService from "@/services/TronService";
+import Tronweb from "tronweb/src/tronweb";
 
 
 const android = Platform.OS === "android";
@@ -67,7 +68,6 @@ const ImportByMnemonic = ()=>{
             }else if (res?.type == "mnemonic"){
                 await handleMnemonic()
             }
-            router.push("/(tabs)")
         }
     }
 
@@ -85,17 +85,16 @@ const ImportByMnemonic = ()=>{
 
                 // Tron适配
                 let address = tronService.getWalletPublicKey(inputInfo)
-
                 accountStore.setAccountName("account: " + privateKeyIndex)
-                accountStore.setAccountAddress(address.hex as string)
+                accountStore.setAccountAddress(address.base58 as string)
                 accountStore.setAccountPrivateKey(inputInfo)
 
-                console.log("import Addr:", address)
+
                 await savePrivateKey(inputInfo, privateKeyIndex)
                 await savePrivateKeyIndexBound(privateKeyIndex)
             }
             // 跳转页面
-
+            router.push("/(tabs)")
         }catch (error) {
             console.error("import err:", error)
         }
@@ -130,6 +129,8 @@ const ImportByMnemonic = ()=>{
             accountStore.setOtherAccounts(importedWallets)
 
             await savePhrase(inputInfo)
+
+            router.push("/(tabs)")
             console.log("import Addr:", address)
         }catch (error) {
             console.error("import err:", error)
@@ -144,8 +145,8 @@ const ImportByMnemonic = ()=>{
                 {/*Header*/}
                 <DefaultHeader
                     leftIcon={leftIcon}
-                    leftIconWidth={18.74}
-                    leftIconHeight={33.76}
+                    leftIconWidth={25}
+                    leftIconHeight={42}
                     clickLeft={handleLeftClick}
                 />
 

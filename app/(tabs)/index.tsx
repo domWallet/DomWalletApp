@@ -33,7 +33,7 @@ const titles = ["Currency", "NFT"]
 
 const tokensInfos = [TRX, USDT, TUSD]
 
-const Wallet = ()=>{
+const Index = ()=>{
 
 
     const tokenStore = useTokenStore()
@@ -43,7 +43,9 @@ const Wallet = ()=>{
 
 
     const handleClick = ()=>{
-        router.push("/account/receiveTokens")
+        if (accountStore.accountAddress != ""){
+            router.push("/account/receiveTokens")
+        }
     }
 
     const handleTransfer = () => {
@@ -76,9 +78,7 @@ const Wallet = ()=>{
         const address = accountStore.accountAddress
         let tokenPriceRes = await getTokensPrice()
         let tokenAmount = await getAccountTokenBalance(address)
-
         for (let i = 0; i < tokensInfos.length; i++) {
-
             let usd
             let change
             let sign
@@ -93,7 +93,6 @@ const Wallet = ()=>{
                 usd = res?.usd
                 change = res?.usd_24h_change
             }
-
             let amount = handleDecimal(tokenAmount[i], tokensInfos[i].decimals)
             let amount_big = new Big(amount.toString())
             let usd_big = new Big(usd)
@@ -221,5 +220,5 @@ const styles = StyleSheet.create({
     }
 })
 
-export default Wallet;
+export default Index;
 

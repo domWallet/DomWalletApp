@@ -6937,11 +6937,6 @@ react-native-helmet-async@2.0.4:
     react-fast-compare "^3.2.2"
     shallowequal "^1.1.0"
 
-react-native-image-filter@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/react-native-image-filter/-/react-native-image-filter-1.0.3.tgz#17ffa5d2aafadc6bcbe9f1d5487d910bd7acaf1e"
-  integrity sha512-JykoMS2P7zQUfcae5egIMOxzmYKaJ9dzr0TiXV/8b+tP6x2syRlEACCRYwtrqGmRzXB/nhqdD+ybtgzK1WhSnQ==
-
 react-native-is-edge-to-edge@^1.1.6:
   version "1.1.6"
   resolved "https://registry.yarnpkg.com/react-native-is-edge-to-edge/-/react-native-is-edge-to-edge-1.1.6.tgz#69ec13f70d76e9245e275eed4140d0873a78f902"

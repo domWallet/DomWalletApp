@@ -39,8 +39,8 @@ const SelectToken = () => {
                 {/*Header*/}
                 <DefaultHeader
                     leftIcon={leftIcon}
-                    leftIconWidth={18.74}
-                    leftIconHeight={33.76}
+                    leftIconWidth={25}
+                    leftIconHeight={42}
                     info={"header:select"}
                     infoWight={600}
                     infoSize={30}

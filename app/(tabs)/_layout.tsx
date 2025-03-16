@@ -86,7 +86,7 @@ export default function TabLayout(){
                 />
                 <Tab.Screen
                     name="RWA"
-                    component={index}
+                    component={RWA}
                     listeners={({ navigation, route }) => ({
                         tabPress: e => {
                             e.preventDefault(); // 阻止默认的导航行为
@@ -114,7 +114,7 @@ export default function TabLayout(){
                 />
                 <Tab.Screen
                     name="Trade"
-                    component={index}
+                    component={Trade}
                     listeners={({ navigation, route }) => ({
                         tabPress: e => {
                             e.preventDefault(); // 阻止默认的导航行为

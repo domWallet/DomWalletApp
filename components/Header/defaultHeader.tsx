@@ -49,7 +49,10 @@ const DefaultHeader = ({leftIcon, leftIconWidth, leftIconHeight, clickLeft, info
             }]}>
 
                 <TouchableOpacity
-                    style={styles.btnContainer}
+                    style={[styles.btnContainer, {
+                        width: trueLeftIconWidth,
+                        height: trueLeftIconHeight,
+                    }]}
                     onPress={clickLeft}
                 >
                     <Image source={leftIcon} style={{

@@ -33,7 +33,7 @@ const WalletCard = ({imgPath, accountName, balance}: props) => {
                             alignItems: "center"
                         }}>
                             <Text style={[styles.walletAddressText]}>{t('account:address')} {":"}</Text>
-                            <Text style={styles.walletAddressText}>{formatAddress(accountStore.accountAddress, 8, 5)}</Text>
+                            <Text style={styles.walletAddressText}>{formatAddress(accountStore.accountAddress, 4, 4)}</Text>
                         </View>
                     </View>
                     <View style={styles.balance}>
