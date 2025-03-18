@@ -4,16 +4,19 @@ import {lightTheme} from "@/styles/global";
 import {calculateWidth as cw, calculateHeight as ch} from "@/utils/calculatedPercentage";
 import SkeletonItem from "@/components/Skeleton/SkeletonItem";
 import uuid from "react-native-uuid";
-import {useEffect, useState} from "react";
+import {useEffect, } from "react";
 import {getPhrase, getPrivateKey, getPrivateKeyIndexBound} from "@/utils/useStorageState";
 import tronService from "@/services/TronService";
-import * as SplashScreen from "expo-splash-screen";
 import useAccountStore from "@/store/accountStore";
-import {router, useRouter} from "expo-router";
+import { useRouter} from "expo-router";
+import {addFetchProxy} from "@/axios/proxyFetch";
+
 
 const android = Platform.OS === "android";
 
 const Index = () => {
+
+    addFetchProxy()
 
     const accountStore = useAccountStore()
 

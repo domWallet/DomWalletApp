@@ -3,17 +3,28 @@ import * as bip39 from '@scure/bip39';
 import { wordlist } from '@scure/bip39/wordlists/english';
 import {validateMnemonic} from "@scure/bip39";
 import {getTransactionIDHistory} from "@/services/TronWebService";
+import HttpProvider from 'tronweb/lib/esm/lib/providers/HttpProvider';
+
+const tron_utl = process.env.EXPO_PUBLIC_Tron_URL
+// const fullNode = tron_utl;
+// const solidityNode = tron_utl;
+// const eventServer = tron_utl;
+// const privateKey = process.env.EXPO_PUBLIC_Tron_APIKEY;
+const proxyURL = process.env.EXPO_PUBLIC_PROXY;
+
+
 
 
 class TronService {
     public tronWeb: TronWeb;
+
 
     constructor(
         private hostUrl: string,
         private APIKEY: string
     ) {
         this.tronWeb = new TronWeb({
-            fullHost: hostUrl,
+            fullHost: tron_utl,
             headers: { 'TRON-PRO-API-KEY': APIKEY }
         });
     }

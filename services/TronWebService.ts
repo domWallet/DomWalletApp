@@ -1,5 +1,4 @@
 
-
 const url = "https://api.trongrid.io/v1/"
 const API_KEY = process.env.EXPO_PUBLIC_Tron_APIKEY;
 const getTransactionIDHistory = async (address: string, fingerprint: string) => {

@@ -19,8 +19,6 @@ import {router} from "expo-router";
 import {getPhrase, getPrivateKey, getPrivateKeyIndexBound} from "@/utils/useStorageState";
 import tronService from "@/services/TronService";
 
-
-
 const android = Platform.OS === "android";
 const Big = require("big.js")
 const photo = require("@/assets/app/wallet/photo.png")
@@ -144,7 +142,9 @@ const Index = ()=>{
 
     const getAccountTokenBalance = async (address: string)=>{
         let res = []
+        debugger
         let trxBalance = await getTrxBalance(address)
+        debugger
         res.push(trxBalance)
         let usdtBalance = await getUsdtBalance(address)
         res.push(usdtBalance)
@@ -169,7 +169,10 @@ const Index = ()=>{
 
                     <ActionButton imgPath={receive} actionName={"Receive"} action={handleClick}/>
 
-                    <ActionButton imgPath={history} actionName={"History"} action={()=>{}}/>
+                    <ActionButton imgPath={history} actionName={"History"} action={()=>{
+                        // @ts-ignore
+                        router.push("/wallet/import/importByMnemonic")
+                    }}/>
 
                     <ActionButton imgPath={other} actionName={"Other"} action={()=>{}}/>
                 </View>

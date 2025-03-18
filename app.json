@@ -10,16 +10,16 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.xiaoxiaoguai.DomWallet"
+      "bundleIdentifier": ""
     },
     "android": {
-      "permissions": ["INTERNET"],
       "usesCleartextTraffic": true,
+      "permissions": ["INTERNET"],
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.xiaoxiaoguai.DomWallet"
+      "package": "com.dadaguai.DomWallet"
     },
     "web": {
       "bundler": "metro",
@@ -52,9 +52,9 @@
         "origin": false
       },
       "eas": {
-        "projectId": "636425af-dec2-4369-b7f4-a758f659fa44"
+        "projectId": "43b6395f-2284-4bb6-87c9-eca7a31ccf80"
       }
     },
-    "owner": "xiaoxiaoguai"
+    "owner": "dadaguai"
   }
 }
