@@ -15,7 +15,6 @@ import useAccountStore from "@/store/accountStore";
 import ethService from "@/services/EthereumService"
 import {HDNodeWallet, Mnemonic, Wallet} from "ethers";
 import tronService from "@/services/TronService";
-import Tronweb from "tronweb/src/tronweb";
 
 
 const android = Platform.OS === "android";

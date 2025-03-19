@@ -14,7 +14,7 @@ import {ethers} from "ethers";
 import {getPrivateKeyIndexBound, savePhrase} from "@/utils/useStorageState";
 import useAccountStore from "@/store/accountStore";
 import {getRandomBytesAsync} from "expo-crypto";
-import {TronWeb} from "tronweb";
+import { TronWeb } from "tronweb-proxy";
 import {Buffer} from "buffer";
 
 global.Buffer = Buffer;

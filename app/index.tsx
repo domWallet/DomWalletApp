@@ -9,7 +9,6 @@ import {getPhrase, getPrivateKey, getPrivateKeyIndexBound} from "@/utils/useStor
 import tronService from "@/services/TronService";
 import useAccountStore from "@/store/accountStore";
 import { useRouter} from "expo-router";
-import {addFetchProxy} from "@/axios/proxyFetch";
 
 
 const android = Platform.OS === "android";

@@ -1,9 +1,9 @@
-import {TronWeb} from "tronweb";
+// @ts-ignore
+import { TronWeb } from "tronweb-proxy"
 import * as bip39 from '@scure/bip39';
 import { wordlist } from '@scure/bip39/wordlists/english';
 import {validateMnemonic} from "@scure/bip39";
 import {getTransactionIDHistory} from "@/services/TronWebService";
-import HttpProvider from 'tronweb/lib/esm/lib/providers/HttpProvider';
 
 
 const proxyURL = process.env.EXPO_PUBLIC_PROXY;
@@ -22,6 +22,9 @@ class TronService {
         this.tronWeb = new TronWeb({
             fullHost: hostUrl,
             headers: { 'TRON-PRO-API-KEY': APIKEY },
+            proxyUrl: proxyURL,
+            // @ts-ignore
+            proxyPORT: proxyPORT
         });
     }
 

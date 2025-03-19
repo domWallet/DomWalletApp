@@ -16,15 +16,13 @@ interface props {
 const SkeletonItem = ({width, height, borderRadius, color, bgColor}: props) => {
 
 
-    const [frontColor, setFrontColor] = useState("")
-    const [endColor, setEndColor] = useState("")
+    const [frontColor, setFrontColor] = useState(lightTheme.border_main_color)
+    const [endColor, setEndColor] = useState(lightTheme.border_sub_color)
 
     useEffect(() => {
-        setFrontColor(lightTheme.border_main_color)
         if (bgColor) {
             setFrontColor(bgColor)
         }
-        setEndColor(lightTheme.border_sub_color)
         if (color){
             setEndColor(color)
         }

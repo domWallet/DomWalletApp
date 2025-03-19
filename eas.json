@@ -19,8 +19,7 @@
         "simulator": true
       },
       "android": {
-        "buildType": "apk",
-        "gradleCommand": "yarn install --postinstall && cd android && ./gradlew assembleDebug"
+        "buildType": "apk"
       },
       "distribution": "internal"
     },
