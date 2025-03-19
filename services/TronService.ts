@@ -5,13 +5,9 @@ import {validateMnemonic} from "@scure/bip39";
 import {getTransactionIDHistory} from "@/services/TronWebService";
 import HttpProvider from 'tronweb/lib/esm/lib/providers/HttpProvider';
 
-const tron_utl = process.env.EXPO_PUBLIC_Tron_URL
-// const fullNode = tron_utl;
-// const solidityNode = tron_utl;
-// const eventServer = tron_utl;
-// const privateKey = process.env.EXPO_PUBLIC_Tron_APIKEY;
-const proxyURL = process.env.EXPO_PUBLIC_PROXY;
 
+const proxyURL = process.env.EXPO_PUBLIC_PROXY;
+const proxyPORT= process.env.EXPO_PUBLIC_PROXY_PORT
 
 
 
@@ -24,8 +20,8 @@ class TronService {
         private APIKEY: string
     ) {
         this.tronWeb = new TronWeb({
-            fullHost: tron_utl,
-            headers: { 'TRON-PRO-API-KEY': APIKEY }
+            fullHost: hostUrl,
+            headers: { 'TRON-PRO-API-KEY': APIKEY },
         });
     }
 
