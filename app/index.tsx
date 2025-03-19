@@ -16,8 +16,6 @@ const android = Platform.OS === "android";
 
 const Index = () => {
 
-    addFetchProxy()
-
     const accountStore = useAccountStore()
 
     const tokenInfoSkeleton = ()=>{

@@ -1,9 +1,6 @@
 import {Stack} from "expo-router";
-import {addFetchProxy} from "@/axios/proxyFetch";
 
 export default function RootLayout() {
-
-  addFetchProxy()
 
   return (
       <>

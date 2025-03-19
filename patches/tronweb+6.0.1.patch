@@ -1,0 +1,25 @@
+diff --git a/node_modules/tronweb/src/lib/providers/HttpProvider.ts b/node_modules/tronweb/src/lib/providers/HttpProvider.ts
+index ae22a66..4bc2ba8 100644
+--- a/node_modules/tronweb/src/lib/providers/HttpProvider.ts
++++ b/node_modules/tronweb/src/lib/providers/HttpProvider.ts
+@@ -10,7 +10,7 @@ export default class HttpProvider {
+     headers: HeadersType;
+     statusPage: string;
+     instance: HttpProviderInstance;
+-    constructor(host: string, timeout = 30000, user = '', password = '', headers: HeadersType = {}, statusPage = '/') {
++    constructor(host: string, timeout = 30000, user = '', password = '', headers: HeadersType = {}, statusPage = '/', proxy_url= '', proxy_prot = 0) {
+         if (!isValidURL(host)) throw new Error('Invalid URL provided to HttpProvider');
+ 
+         if (isNaN(timeout) || timeout < 0) throw new Error('Invalid timeout duration provided');
+@@ -30,6 +30,11 @@ export default class HttpProvider {
+             baseURL: host,
+             timeout: timeout,
+             headers: headers,
++            proxy: {
++                protocol: 'https',
++                host: proxy_url,
++                port: proxy_prot,
++            },
+             auth: user
+                 ? {
+                       username: user,
