@@ -40,18 +40,27 @@ const Index = ()=>{
     const [currentTokens, setCurrentTokens] = useState<any[]>([])
 
 
-    const handleClick = ()=>{
-        if (accountStore.accountAddress != ""){
-            router.push("/account/receiveTokens")
-        }
+    const handleClick = async ()=>{
+        // if (accountStore.accountAddress != ""){
+        //     router.push("/account/receiveTokens")
+        // }
+        console.log("usdt")
+        const address = accountStore.accountAddress
+        console.log("address:", address)
+        let usdtBalance = await getTusdBalance(address)
+        console.log("usdtBalance:", usdtBalance)
     }
 
-    const handleTransfer = () => {
-        console.log("transfer")
-        if (currentTokens.length > 0){
-            // 确保数据请求完毕
-            router.push("/account/selectToken")
-        }
+    const handleTransfer = async () => {
+        console.log("trx")
+        const address = accountStore.accountAddress
+        console.log("address:", address)
+        let trxBalance = await getTrxBalance(address)
+        console.log("trxBalance:", trxBalance)
+        // if (currentTokens.length > 0){
+        //     // 确保数据请求完毕
+        //     router.push("/account/selectToken")
+        // }
     }
 
     useEffect(()=>{
