@@ -4,6 +4,7 @@ import Import from "./importWallet.json"
 import Create from "./create.json"
 import Account from "./account.json"
 import Transfer from "./transfer.json"
+import Mine from "./mine.json"
 
 
 const En = {
@@ -12,7 +13,8 @@ const En = {
     import: Import,
     create: Create,
     account: Account,
-    transfer: Transfer
+    transfer: Transfer,
+    mine: Mine
 }
 
 export default En

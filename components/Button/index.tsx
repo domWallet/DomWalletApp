@@ -88,6 +88,7 @@ const MyButton = ({
                 <Image source={imgPath} style={{
                     width: trueImgWidth,
                     height: trueImgHeight,
+                    marginRight: calculateWidth(6)
                 }} alt="Img_Icon"/>
             </>
         )

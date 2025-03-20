@@ -20,6 +20,7 @@ export default function RootLayout() {
           <Stack.Screen name="account/transferToken" options={{ headerShown:false}} />
           <Stack.Screen name="account/transferSigend" options={{ headerShown:false}} />
           <Stack.Screen name="account/transferResult" options={{ headerShown:false}} />
+          <Stack.Screen name="mine/languageChoose" options={{ headerShown:false}} />
           <Stack.Screen name="test" options={{ headerShown:false}} />
         </Stack>
       </>
