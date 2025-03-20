@@ -103,6 +103,7 @@ const ImportByMnemonic = ()=>{
     // 处理助记词导入
     const handleMnemonic = async () => {
         try {
+            debugger
             let privateKeyIndex = await getPrivateKeyIndexBound()
             if (typeof privateKeyIndex != 'number' && privateKeyIndex != undefined){
                 // @ts-ignore
@@ -130,7 +131,7 @@ const ImportByMnemonic = ()=>{
             await savePhrase(inputInfo)
 
             router.push("/(tabs)")
-            console.log("import Addr:", address)
+            // console.log("import Addr:", address)
         }catch (error) {
             console.error("import err:", error)
         }

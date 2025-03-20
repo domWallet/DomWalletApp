@@ -36,6 +36,7 @@ const Label = ({info, clickFn}: props)=>{
                 <Text style={styles.infoText}>{t(info)}</Text>
 
                 <RadioButton
+                    onPress={handleClick}
                     // @ts-ignore
                     status={click}
                     color={"#000000"}

@@ -15,23 +15,15 @@ const getTronPriceAndChanges = async () => {
     };
 
     let res = {
-        usd: "0.212441",
-        usd_24h_change: "-3.6675799903878357"
+        usd: "0",
+        usd_24h_change: "0"
     }
-    debugger
-    // await checkInternationalAccess()
-    // debugger
+
     try {
-        debugger
-        // let result = await fetch(url, options)
-        debugger
-        // console.log("result: ", result)
-        // let res_json = await result.json()
-        debugger
-        // alert(`param1: ${res_json?.tron?.usd}`)
-        // alert(`param2: ${res_json?.tron?.usd_24h_change}`)
-        // res.usd = res_json?.tron?.usd
-        // res.usd_24h_change = res_json?.tron?.usd_24h_change
+        let result = await fetch(url, options)
+        let res_json = await result.json()
+        res.usd = res_json?.tron?.usd
+        res.usd_24h_change = res_json?.tron?.usd_24h_change
         return res
     }catch (err) {
         console.log("Error fetching tron price and changes: ", err)
@@ -43,8 +35,7 @@ const getTronPriceAndChanges = async () => {
 *  addresses: 多个TRC20代币地址，以逗号分隔
 * */
 const getTokenPriceAndChanges = async (addresses: string) => {
-    // const url = `${COINGECKO_API_URL}/simple/token_price/tron?contract_addresses=${addresses}&vs_currencies=usd&include_24hr_change=true`
-    const url = "https://dom.xycrypto.xyz/api/api/token-price/tron?contract_addresses=${addresses}&vs_currencies=usd"
+    const url = `${COINGECKO_API_URL}/simple/token_price/tron?contract_addresses=${addresses}&vs_currencies=usd&include_24hr_change=true`
 
     const option = {
         method: 'GET',
@@ -54,26 +45,14 @@ const getTokenPriceAndChanges = async (addresses: string) => {
         }
     }
     debugger
-    let res = {
-        TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t: {
-            usd: 0.999879,
-            usd_24h_change: -0.013304985391470025
-        },
-        TUpMhErZL2fhh4sVNULAbNKLokS4GjC1F4: {
-            usd: 1.002,
-            usd_24h_change: 0.23696777727956259
-        }
+    let res = {}
+    try {
+        let response = await fetch(url, option)
+        let res_json = await response.json()
+        res = res_json
+    }catch (err) {
+        console.log("Error fetching tron price and changes: ", err)
     }
-    // try {
-    //     debugger
-    //     let response = await fetch(url, option)
-    //     debugger
-    //     let res_json = await response.json()
-    //     debugger
-    //     res = res_json
-    // }catch (err) {
-    //     console.log("Error fetching tron price and changes: ", err)
-    // }
     return res
 }
 

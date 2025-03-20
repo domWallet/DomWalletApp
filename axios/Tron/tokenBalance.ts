@@ -21,30 +21,22 @@ const getTusdBalance = async (address: string) => {
     let res
     try {
         instance = await tronweb.contract(tusd, tokens.TUSD.address)
-        console.log("instance：", instance)
         res = await instance.balanceOf(address).call() // 返回的是一个bigInt
-        console.log("res:", res)
     }catch (error) {
         console.log("request error:", error);
     }
-    // let instance = await tronweb.contract(tusd, tokens.TUSD.address)
-    // debugger
-    // let res = await instance.balanceOf(address).call()
     return res
 }
 
 
 const getTrxBalance = async (address: string) => {
     const tronweb = TronService.tronWeb
-    debugger
     let res;
     try {
         res = await tronweb.trx.getBalance(address)
     }catch (error) {
         console.log("request error:", error);
     }
-    // let res = await tronweb.trx.getBalance(address)
-    debugger
     return res
 }
 

@@ -46,6 +46,7 @@ const TransferSigend = () => {
         let toAddress = params?.receive as string
         let symbol = params?.symbol
         let hash
+        console.log(`开始交易 from: ${fromAddress}, to: ${toAddress}, amount: ${amount}, privateKey: ${privateKey}`)
         if (symbol === "TRX"){
             hash = await sendTrx(fromAddress, toAddress, amount, privateKey)
         }else if (symbol === "USDT"){

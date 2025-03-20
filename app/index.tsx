@@ -9,6 +9,9 @@ import {getPhrase, getPrivateKey, getPrivateKeyIndexBound} from "@/utils/useStor
 import tronService from "@/services/TronService";
 import useAccountStore from "@/store/accountStore";
 import { useRouter} from "expo-router";
+import {Buffer} from "buffer";
+
+global.Buffer = Buffer;
 
 
 const android = Platform.OS === "android";

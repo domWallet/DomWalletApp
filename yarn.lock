@@ -2725,9 +2725,9 @@ axios@^1.7.4:
     proxy-from-env "^1.1.0"
 
 axios@^1.8.3:
-  version "1.8.3"
-  resolved "https://registry.yarnpkg.com/axios/-/axios-1.8.3.tgz#9ebccd71c98651d547162a018a1a95a4b4ed4de8"
-  integrity sha512-iP4DebzoNlP/YN2dpwCgb8zoCmhtkajzS48JvwmkSkXvPI3DHc7m+XYL5tGnSlJtR6nImXZmdCuN5aP8dh1d8A==
+  version "1.8.4"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-1.8.4.tgz#78990bb4bc63d2cae072952d374835950a82f447"
+  integrity sha512-eBSYY4Y68NNlHbHBMdeDmKNtDgXWhQsJcGqzO3iLUM0GraQFSS9cVgPX5I9b3lbdFKyYoAEGAZF1DwhTaljNAw==
   dependencies:
     follow-redirects "^1.15.6"
     form-data "^4.0.0"
@@ -8141,10 +8141,10 @@ tr46@~0.0.3:
   resolved "https://registry.yarnpkg.com/tr46/-/tr46-0.0.3.tgz#8184fd347dac9cdc185992f3a6622e14b9d9ab6a"
   integrity sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==
 
-tronweb-proxy@^6.0.4:
-  version "6.0.4"
-  resolved "https://registry.yarnpkg.com/tronweb-proxy/-/tronweb-proxy-6.0.4.tgz#db4162998aff8dc664a5e71730cf9f8fbf32f8d0"
-  integrity sha512-Gge2vHFrKMqH7Cvck2bwgSbLWkLL3BpfjNXOEdU+BYeB43DR2r+I54ofrR7fBS63QWJ5ouDxdjffjsx+u4l+ZQ==
+tronweb@^6.0.2:
+  version "6.0.2"
+  resolved "https://registry.yarnpkg.com/tronweb/-/tronweb-6.0.2.tgz#70466e3fff6dfd816954da36fc1bf4d9739fa0b2"
+  integrity sha512-I8MfenbmGTbDYhr/d/SMH1QGMv2ISHro23hL8TGoDjt2oYMcekFX76rjnEBdfe/P/roqwrZs1nGRdeftn3iZQw==
   dependencies:
     "@babel/runtime" "^7.0.0"
     axios "^1.8.3"

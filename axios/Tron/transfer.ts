@@ -13,9 +13,11 @@ const sendTrx  = async (fromAddress: string, toAddress: string, value: string, p
     let transactionId = ""
     let transactionRes = ""
     try {
+        console.log("交易trx开始")
         const signedTransaction = await tronweb.trx.signTransaction(transaction)
         const result = await tronweb.trx.sendRawTransaction(signedTransaction)
         transactionId = result.txid
+        console.log("交易trx结束:", transactionId)
         // transactionRes = await getTransactionRes(transactionId)
         return transactionId
     }catch (err) {
@@ -56,11 +58,11 @@ const sendTUSD = async (fromAddress: string, toAddress: string, value: string, p
     let transactionId = ""
     let transactionRes = ""
     try {
-
+        console.log("交易TUSD开始")
         const transaction = await contract.transfer(toAddress, decimalValue.toString()).send({
             feeLimit: 100_000_000,
         })
-        console.log("Transaction:", transaction)
+        console.log("TUSD交易结束:", transaction)
         transactionId = transaction
         // transactionRes = await getTransactionRes(transactionId)
         return transactionId;

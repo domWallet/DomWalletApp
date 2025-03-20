@@ -179,7 +179,7 @@ export default function Login() {
         debugger
         if (authInfo != "" && !eMailWaring){
             let res = await loginApi(eMailInfo, authInfo)
-            await saveAccessToken(res)
+            let tokenRes =  await saveAccessToken(res)
             // @ts-ignore
             router.push("choose")
         }

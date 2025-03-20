@@ -173,12 +173,6 @@ export default function TabLayout(){
                 <Tab.Screen
                     name="Mine"
                     component={Mine}
-                    listeners={({ navigation, route }) => ({
-                        tabPress: e => {
-                            e.preventDefault(); // 阻止默认的导航行为
-                            // 这里可以添加其他逻辑，例如显示一个提示信息
-                        },
-                    })}
                     options={{
                         title: "Mine",
                         tabBarLabel: ({focused}) => {

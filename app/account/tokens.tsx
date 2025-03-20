@@ -8,9 +8,11 @@ import SkeletonItem from "@/components/Skeleton/SkeletonItem";
 
 interface props {
     tokenInfos: any
+    refreshing: boolean,
+    refreshingFn: any
 }
 
-const Tokens = ({tokenInfos}: props) => {
+const Tokens = ({tokenInfos, refreshing, refreshingFn}: props) => {
 
 
     const tokenInfoSkeleton = ()=>{
@@ -55,6 +57,8 @@ const Tokens = ({tokenInfos}: props) => {
             <>
                 <FlatList
                     data={tokenInfos}
+                    refreshing={refreshing}
+                    onRefresh={refreshingFn}
                     renderItem={({item}) => (<TokenInfo icon={item.icon} name={item.name} amount={item.amount} change={item.change} price={item.price} sign={item.sign} worth={item.worth}/>)}
                     keyExtractor={(item) => uuid.v4().toString()}
                 />

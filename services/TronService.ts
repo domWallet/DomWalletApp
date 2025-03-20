@@ -1,5 +1,6 @@
 // @ts-ignore
-import { TronWeb } from "tronweb-proxy"
+// import { TronWeb } from "tronweb-proxy"
+import {TronWeb} from "tronweb";
 import * as bip39 from '@scure/bip39';
 import { wordlist } from '@scure/bip39/wordlists/english';
 import {validateMnemonic} from "@scure/bip39";
@@ -9,11 +10,14 @@ import {getTransactionIDHistory} from "@/services/TronWebService";
 const proxyURL = process.env.EXPO_PUBLIC_PROXY;
 const proxyPORT= process.env.EXPO_PUBLIC_PROXY_PORT
 
+// proxyUrl: proxyURL,
+// @ts-ignore
+// proxyPORT: proxyPORT
+
 
 
 class TronService {
     public tronWeb: TronWeb;
-
 
     constructor(
         private hostUrl: string,
@@ -22,9 +26,6 @@ class TronService {
         this.tronWeb = new TronWeb({
             fullHost: hostUrl,
             headers: { 'TRON-PRO-API-KEY': APIKEY },
-            proxyUrl: proxyURL,
-            // @ts-ignore
-            proxyPORT: proxyPORT
         });
     }
 
@@ -118,7 +119,6 @@ class TronService {
         }
 
         let currentIndex = index;
-        debugger
         while (true){
             const path = `m/44'/195'/0'/0/${currentIndex}`;
             const wallet = TronWeb.fromMnemonic(phrase, path);

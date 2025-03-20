@@ -1,4 +1,4 @@
-import {Platform, SafeAreaView, StyleSheet, Text, useWindowDimensions, View} from "react-native";
+import {Platform, SafeAreaView, ScrollView, StyleSheet, Text, useWindowDimensions, View} from "react-native";
 import {heightPercentageToDP as hp} from "react-native-responsive-screen";
 import {lightTheme} from "@/styles/global";
 import WalletHeader from "@/components/wallet/Header";
@@ -38,29 +38,26 @@ const Index = ()=>{
     const accountStore = useAccountStore()
     const [accountPrice, setAccountPrice] = useState("0")
     const [currentTokens, setCurrentTokens] = useState<any[]>([])
+    const [refreshing, setRefreshing] = useState(false)
 
 
     const handleClick = async ()=>{
-        // if (accountStore.accountAddress != ""){
-        //     router.push("/account/receiveTokens")
-        // }
-        console.log("usdt")
-        const address = accountStore.accountAddress
-        console.log("address:", address)
-        let usdtBalance = await getTusdBalance(address)
-        console.log("usdtBalance:", usdtBalance)
+        if (accountStore.accountAddress != ""){
+            router.push("/account/receiveTokens")
+        }
     }
 
     const handleTransfer = async () => {
-        console.log("trx")
-        const address = accountStore.accountAddress
-        console.log("address:", address)
-        let trxBalance = await getTrxBalance(address)
-        console.log("trxBalance:", trxBalance)
-        // if (currentTokens.length > 0){
-        //     // 确保数据请求完毕
-        //     router.push("/account/selectToken")
-        // }
+        if (currentTokens.length > 0){
+            // 确保数据请求完毕
+            router.push("/account/selectToken")
+        }
+    }
+
+    const onRefreshing = async () => {
+        setRefreshing(true)
+        setCurrentTokens([])
+        await getAccountTokenPrice()
     }
 
     useEffect(()=>{
@@ -69,6 +66,11 @@ const Index = ()=>{
         })()
     }, [])
 
+    useEffect(() => {
+        if (currentTokens.length > 0){
+            setRefreshing(false)
+        }
+    }, [currentTokens]);
 
     useEffect(()=>{
         let sum = new Big(0)
@@ -151,9 +153,7 @@ const Index = ()=>{
 
     const getAccountTokenBalance = async (address: string)=>{
         let res = []
-        debugger
         let trxBalance = await getTrxBalance(address)
-        debugger
         res.push(trxBalance)
         let usdtBalance = await getUsdtBalance(address)
         res.push(usdtBalance)
@@ -188,8 +188,8 @@ const Index = ()=>{
 
                 <View style={styles.tabViewContainer}>
                     <Tabs titles={titles}>
-                        <Tokens tokenInfos={currentTokens}/>
-                        <Tokens tokenInfos={currentTokens}/>
+                        <Tokens tokenInfos={currentTokens} refreshing={refreshing} refreshingFn={onRefreshing}/>
+                        <Tokens tokenInfos={currentTokens} refreshing={refreshing} refreshingFn={onRefreshing}/>
                     </Tabs>
                 </View>
 

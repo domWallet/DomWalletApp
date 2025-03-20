@@ -23,9 +23,7 @@ export function verifyPrivateKey(privateKey: string): boolean {
 
 // 验证助记词是否是BIP39规定的单词
 export function validateBipMnemonic(mnemonic: string) {
-    console.log("validateBipMnemonic:", mnemonic)
     let res = bip39.validateMnemonic(mnemonic, wordlist)
-    console.log("res:", res)
     return res;
 }
 
