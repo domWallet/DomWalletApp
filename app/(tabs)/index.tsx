@@ -12,12 +12,10 @@ import {useTokenStore} from "@/store/tokenStore";
 import useAccountStore from "@/store/accountStore";
 import {TRX, USDT, TUSD} from "@/constant/tokens"
 import {getTokenPriceAndChanges, getTronPriceAndChanges} from "@/axios/http/tokenPrice";
-import tokenInfo from "@/components/wallet/TokenInfo";
 import {getTrxBalance, getTusdBalance, getUsdtBalance} from "@/axios/Tron/tokenBalance";
 import {handleDecimal, handlePoint} from "@/utils/handleData";
 import {router} from "expo-router";
-import {getPhrase, getPrivateKey, getPrivateKeyIndexBound} from "@/utils/useStorageState";
-import tronService from "@/services/TronService";
+
 
 const android = Platform.OS === "android";
 const Big = require("big.js")
@@ -180,7 +178,7 @@ const Index = ()=>{
 
                     <ActionButton imgPath={history} actionName={"History"} action={()=>{
                         // @ts-ignore
-                        router.push("/wallet/import/importByMnemonic")
+                        // router.push("/wallet/import/importByMnemonic")
                     }}/>
 
                     <ActionButton imgPath={other} actionName={"Other"} action={()=>{}}/>

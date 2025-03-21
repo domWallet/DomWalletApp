@@ -6,10 +6,10 @@ import {useTranslation} from "react-i18next";
 import {lightTheme} from "@/styles/global";
 
 interface props {
-    leftIcon: ImageSourcePropType;
-    leftIconWidth: number;
-    leftIconHeight: number;
-    clickLeft: any;
+    leftIcon?: ImageSourcePropType;
+    leftIconWidth?: number;
+    leftIconHeight?: number;
+    clickLeft?: any;
     info?: string,
     infoSize?: number;
     infoWight?: number;
@@ -24,8 +24,8 @@ interface props {
 const DefaultHeader = ({leftIcon, leftIconWidth, leftIconHeight, clickLeft, info, infoSize, infoWight, infoColor, rightIcon, rightIconWidth, rightIconHeight, clickRight, showBottom}: props)=>{
 
     const { t } = useTranslation();
-    let trueLeftIconWidth = calculateWidth(leftIconWidth);
-    let trueLeftIconHeight = calculateHeight(leftIconHeight);
+    let trueLeftIconWidth = calculateWidth(leftIconWidth as number || 0);
+    let trueLeftIconHeight = calculateHeight(leftIconHeight as number || 0);
     let trueInfoSize = 0;
     let trueRightIconWidth = 0;
     let trueRightIconHeight = 0;

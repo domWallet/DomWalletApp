@@ -6,22 +6,22 @@ import {lightTheme} from "@/styles/global";
 import { calculateWidth as cw, calculateHeight as ch } from "@/utils/calculatedPercentage";
 
 import index from "./index"
-import RWA from "./RWA"
+import Market from "./Market"
 import Trade from "./Trade"
 import Find from "./Find"
 import Mine from "./Mine"
 import {LinearGradient} from "expo-linear-gradient";
 
 const wallet1 = require('@/assets/app/tab/Wallet1.png')
-const rwa1 = require('@/assets/app/tab/RWA1.png')
 const find1 = require('@/assets/app/tab/Find1.png')
 const mine1 = require('@/assets/app/tab/Mine1.png')
+const market = require("@/assets/app/tab/market.png")
 
 const wallet2 = require('@/assets/app/tab/Wallet2.png')
-const rwa2 = require('@/assets/app/tab/RWA2.png')
 const trade2 = require('@/assets/app/tab/Trade.png')
 const find2 = require('@/assets/app/tab/Find2.png')
 const mine2 = require('@/assets/app/tab/Mine2.png')
+const market2 = require("@/assets/app/tab/market2.png")
 
 const Tab = createBottomTabNavigator();
 
@@ -85,29 +85,23 @@ export default function TabLayout(){
                     }}
                 />
                 <Tab.Screen
-                    name="RWA"
-                    component={RWA}
-                    listeners={({ navigation, route }) => ({
-                        tabPress: e => {
-                            e.preventDefault(); // 阻止默认的导航行为
-                            // 这里可以添加其他逻辑，例如显示一个提示信息
-                        },
-                    })}
+                    name="Market"
+                    component={Market}
                     options={{
-                        title: "RWA",
+                        title: "Market",
                         tabBarLabel: ({focused}) => {
                             return (
                                 <Text style={[{
                                     color: focused ? lightTheme.font_main_color : lightTheme.font_minor_color,
                                     fontWeight: focused ? 800 : 400
                                 }]}>
-                                    {"RWA"}
+                                    {"Market"}
                                 </Text>
                             )
                         },
                         tabBarIcon: ({ focused }) => (
                             <Image source={
-                                focused ? rwa1 : rwa2
+                                focused ? market2 : market
                             } style={styles.iconImage}/>
                         )
                     }}
@@ -118,7 +112,6 @@ export default function TabLayout(){
                     listeners={({ navigation, route }) => ({
                         tabPress: e => {
                             e.preventDefault(); // 阻止默认的导航行为
-                            // 这里可以添加其他逻辑，例如显示一个提示信息
                         },
                     })}
                     options={{

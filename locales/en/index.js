@@ -5,6 +5,7 @@ import Create from "./create.json"
 import Account from "./account.json"
 import Transfer from "./transfer.json"
 import Mine from "./mine.json"
+import Market from "./market.json"
 
 
 const En = {
@@ -14,7 +15,8 @@ const En = {
     create: Create,
     account: Account,
     transfer: Transfer,
-    mine: Mine
+    mine: Mine,
+    market: Market
 }
 
 export default En
