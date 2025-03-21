@@ -1,4 +1,7 @@
 {
   "warn": "Illegal input!!",
-  "exchange": "Exchange&Cross chain"
+  "exchange": "Exchange&Cross chain",
+  "wallet": "Wallet",
+  "network": "Network",
+  "trade": "Trade"
 }
