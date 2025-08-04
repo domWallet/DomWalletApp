@@ -44,7 +44,6 @@ const getTokenPriceAndChanges = async (addresses: string) => {
             'x-cg-demo-api-key': API_KEY as string,
         }
     }
-    debugger
     let res = {}
     try {
         let response = await fetch(url, option)

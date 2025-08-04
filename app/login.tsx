@@ -148,7 +148,7 @@ export default function Login() {
             if (regex.test(text)){
                 setAuthWaring(false)
             }else {
-                setAuthWaring(true)
+                setAuthWaring(false)
             }
         }
     }
@@ -168,7 +168,7 @@ export default function Login() {
         }
     }
 
-    const handleChangeAuth = (text: any) => {
+    const handleChangeAuth =  (text: any) => {
         let dou_verify = Debounce(verifyAuth, 1000)
         dou_verify(text)
         setAuthInfo(text)
@@ -176,7 +176,6 @@ export default function Login() {
 
 
     const loginByCode = async () => {
-        debugger
         if (authInfo != "" && !eMailWaring){
             let res = await loginApi(eMailInfo, authInfo)
             let tokenRes =  await saveAccessToken(res)

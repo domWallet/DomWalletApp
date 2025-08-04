@@ -3,7 +3,7 @@ import {info} from "expo/build/devtools/logger";
 const defaultURL = process.env.EXPO_PUBLIC_HTTP_DEFAULT
 
 const getAuthCodeApi = async (emailAddress: string) => {
-    const url = `${defaultURL}/user/sendEmailCode`
+    const url = `${defaultURL}/chat/user/sendEmailCode`
 
     let Header = new Headers();
     Header.append("Content-Type", "application/json");
@@ -27,7 +27,7 @@ const getAuthCodeApi = async (emailAddress: string) => {
 
 
 const loginApi = async (emailAddress: string, authCode: string) => {
-    const url = `${defaultURL}/user/login`
+    const url = `${defaultURL}/chat/user/login`
 
     let Header = new Headers();
     Header.append("Content-Type", "application/json");

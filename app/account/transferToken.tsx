@@ -49,7 +49,6 @@ const TransferToken = () => {
 
     const handleSend = async () => {
         if (address != "" && amount != 0 && addressError == false){
-            debugger
             // @ts-ignore 进入确认交易页面
             let tokenAddress = selectToken?.address
             // @ts-ignore

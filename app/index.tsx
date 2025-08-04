@@ -61,7 +61,6 @@ const Index = () => {
 
     useEffect(() => {
         (async () => {
-            debugger
             // 加载私钥操作
             let index = await getPrivateKeyIndexBound()
             let privateKey
