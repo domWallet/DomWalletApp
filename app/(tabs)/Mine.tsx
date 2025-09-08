@@ -91,7 +91,10 @@ const Mine = () => {
                         bgColor={lightTheme.bg_sub_color}
                         bdColor={lightTheme.bg_sub_color}
                         borderRadius={50}
-                        onClick={()=>{}}
+                        onClick={()=>{
+                            // @ts-ignore
+                            router.push("/login")
+                        }}
                     />
                 </View>
             </SafeAreaView>
